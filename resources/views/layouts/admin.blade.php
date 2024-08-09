@@ -12,6 +12,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="PWA">
     <meta name="theme-color" content="#ffffff">
+    <meta name="copyright" content="GADAK Studio 2024 - ePresensi SMK Swasta Jambi Medan">
+    <meta name="author" content="Andika Pratama, M. Gilang Chandrawinata">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -25,7 +27,7 @@
 
 <body class="bg-slate-200 font-[Poppins]" x-data="{ isOpen: false }" @click.away="isOpen = false">
     <x-navbar></x-navbar>
-    <div class=" h-[calc(100vh-66px)] p-4">
+    <div class=" h-[calc(100vh-66px)] p-4 max-[768px]:p-3">
         <h1 class="m-2 text-3xl text-black font-semibold">{{ $title }}</h1>
         <div class="bg-[#fff7fc] p-4 h-[calc(100%-50px)] shadow-[0_0_10px_0_rgba(0,0,0,.5)] rounded-lg overflow-auto">
             @yield('body')

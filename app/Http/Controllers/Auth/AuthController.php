@@ -20,7 +20,7 @@ class AuthController extends Controller
      */
     public function loginSiswa()
     {
-        return view('auth.pages.login');
+        return view('auth.pages.login-siswa');
     }
 
     /**
