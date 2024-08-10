@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Auth\Siswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Statistik extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.siswa.pages.statistik', [
-            'title' => 'Statistik',
+        return view('auth.siswa.pages.dashboard', [
+            'title' => 'Dashboard',
         ]);
     }
 

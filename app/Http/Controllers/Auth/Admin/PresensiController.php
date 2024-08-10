@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Siswa;
+namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Dashboard extends Controller
+class PresensiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.siswa.pages.dashboard', [
-            'title' => 'Dashboard',
+        return view('auth.admin.pages.presensi', [
+            'title' => 'Presensi',
         ]);
     }
 

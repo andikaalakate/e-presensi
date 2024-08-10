@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers\Auth\Admin;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
-use App\Models\WaliKelas;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
-class Dashboard extends Controller
+class PenggunaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.admin.pages.dashboard', [
-            'title' => 'Dashboard',
+        $penggunas = User::get();
+        return view('auth.admin.pages.pengguna', [
+            'title' => 'Pengguna',
+            'penggunas' => $penggunas
         ]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'pengguna.xlsx');
     }
 
     /**

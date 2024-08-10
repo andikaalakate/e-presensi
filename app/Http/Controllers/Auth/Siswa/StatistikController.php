@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Admin;
+namespace App\Http\Controllers\Auth\Siswa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Peringkat extends Controller
+class StatistikController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.admin.pages.peringkat', [
-            'title' => 'Peringkat',
+        return view('auth.siswa.pages.statistik', [
+            'title' => 'Statistik',
         ]);
     }
 

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Admin;
+namespace App\Http\Controllers\Auth\Siswa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Jurusan extends Controller
+class KeamananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.admin.pages.jurusan', [
-            'title' => 'Jurusan',
+        return view('auth.siswa.pages.keamanan', [
+            'title' => 'Keamanan',
         ]);
     }
 

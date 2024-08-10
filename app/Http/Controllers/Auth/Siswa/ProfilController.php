@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Admin;
+namespace App\Http\Controllers\Auth\Siswa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Presensi extends Controller
+class ProfilController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.admin.pages.presensi', [
-            'title' => 'Presensi',
+        return view('auth.siswa.pages.profil', [
+            'title' => 'Profil',
         ]);
     }
 

@@ -11,17 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skors', function (Blueprint $table) {
+        Schema::create('send_was', function (Blueprint $table) {
             $table->id();
-            $table->string('nisn', 20);
-            $table->integer('skor');
             $table->timestamps();
-
-            $table->foreign('nisn')
-            ->references('nisn')
-            ->on('presensis')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
         });
     }
 
@@ -30,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('skors');
+        Schema::dropIfExists('send_was');
     }
 };

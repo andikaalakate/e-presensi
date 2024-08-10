@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Auth\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Laporan extends Controller
+class JurusanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.admin.pages.laporan', [
-            'title' => 'Laporan',
+        return view('auth.admin.pages.jurusan', [
+            'title' => 'Jurusan',
         ]);
     }
 

@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Auth\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Profil extends Controller
+class KelasController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.admin.pages.profil', [
-            'title' => 'Profil',
+        return view('auth.admin.pages.kelas', [
+            'title' => 'Kelas',
         ]);
     }
 

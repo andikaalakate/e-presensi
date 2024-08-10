@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Siswa;
+namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\WaliKelas;
 use Illuminate\Http\Request;
 
-class Peringkat extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.siswa.pages.peringkat', [
-            'title' => 'Peringkat',
+        return view('auth.admin.pages.dashboard', [
+            'title' => 'Dashboard',
         ]);
     }
 

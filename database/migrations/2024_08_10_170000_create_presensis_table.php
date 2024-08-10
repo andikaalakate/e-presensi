@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skors', function (Blueprint $table) {
-            $table->id();
-            $table->string('nisn', 20);
-            $table->integer('skor');
+        Schema::create('presensis', function (Blueprint $table) {
+            $table->string('nisn', 20)->primary();
+            $table->enum('status', ['Hadir', 'Alpha', 'Sakit', 'Izin']);
+            $table->time('jam_masuk')->unique();
+            $table->time('jam_pulang')->nullable();
             $table->timestamps();
 
             $table->foreign('nisn')
             ->references('nisn')
-            ->on('presensis')
+            ->on('siswas')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('skors');
+        Schema::dropIfExists('presensis');
     }
 };

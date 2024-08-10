@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Auth\Siswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Profil extends Controller
+class PeringkatController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.siswa.pages.profil', [
-            'title' => 'Profil',
+        return view('auth.siswa.pages.peringkat', [
+            'title' => 'Peringkat',
         ]);
     }
 

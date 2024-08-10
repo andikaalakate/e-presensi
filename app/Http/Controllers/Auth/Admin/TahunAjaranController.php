@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Auth\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Kelas extends Controller
+class TahunAjaranController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth.admin.pages.kelas', [
-            'title' => 'Kelas',
+        return view('auth.admin.pages.tahun-ajaran', [
+            'title' => 'Tahun Ajaran',
         ]);
     }
 
@@ -22,7 +22,9 @@ class Kelas extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.admin.tahun-ajaran.create', [
+            'title' => 'Tambah Tahun Ajaran',
+        ]);
     }
 
     /**
@@ -38,7 +40,9 @@ class Kelas extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('auth.admin.tahun-ajaran.show', [
+            'title' => 'Lihat Tahun Ajaran',
+        ]);
     }
 
     /**
@@ -46,7 +50,9 @@ class Kelas extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('auth.admin.tahun-ajaran.edit', [
+            'title' => 'Edit Tahun Ajaran',
+        ]);
     }
 
     /**
