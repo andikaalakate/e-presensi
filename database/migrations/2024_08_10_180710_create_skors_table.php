@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa_logins', function (Blueprint $table) {
+        Schema::create('skors', function (Blueprint $table) {
             $table->id();
-            $table->string('nisn', 20);
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('nisn');
+            $table->integer('skor');
             $table->timestamps();
 
             $table->foreign('nisn')
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa_logins');
+        Schema::dropIfExists('skors');
     }
 };

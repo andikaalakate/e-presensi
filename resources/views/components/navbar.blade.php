@@ -31,7 +31,15 @@
                     name='stats'></box-icon>Laporan</a></li>
     </ul>
     <ul>
-        <li><a href="" class="gap-2 p-2 text-2xl fill-white flex items-center"><box-icon name='exit'
-                    type='solid'></box-icon>Keluar</a></li>
+        <li>
+            <form action="{{ route('admin.logout') }}" method="post">
+                @method('POST')
+                @csrf
+                <button class="gap-2 p-2 text-2xl fill-white flex items-center">
+                    <box-icon name='exit'type='solid'></box-icon>
+                    Keluar
+                </button>
+            </form>
+        </li>
     </ul>
 </aside>

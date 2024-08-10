@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('siswas', function (Blueprint $table) {
-            $table->string('nis', 20)->primary();
+            $table->string('nisn', 20)->primary();
             $table->string('nama_lengkap', 50);
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->date('tanggal_lahir');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('no_telp', 16)->nullable();
             $table->string('foto')->nullable();
-            $table->foreignId('kelas_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -12,9 +12,12 @@ use App\Http\Controllers\Auth\Admin\Profil;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::name('admin.')->prefix('admin')->group(function () {
+Route::name('admin.')->prefix('admin')->middleware(['auth:admin', 'auth.session'])->group(function () {
+    // Dashboard
     Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
-    Route::get('/login', [AuthController::class, 'loginAdmin'])->name('login');
+
+    // Logout
+    Route::post('/logout', [AuthController::class, 'adminLogout'])->name('logout');
 
     // Siswa
     Route::get('/siswa', [Siswa::class, 'index'])->name('siswa');

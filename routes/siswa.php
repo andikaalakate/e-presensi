@@ -10,9 +10,12 @@ use App\Http\Controllers\Auth\Siswa\Presensi;
 use App\Http\Controllers\Auth\Siswa\Profil;
 use Illuminate\Support\Facades\Route;
 
-Route::name('siswa.')->prefix('siswa')->group(function () {
+Route::name('siswa.')->prefix('siswa')->middleware(['auth:siswa', 'auth.session'])->group(function () {
+    // Dashboard
     Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
-    Route::get('/login', [AuthController::class, 'loginSiswa'])->name('login');
+
+    // Logout
+    Route::post('/logout', [AuthController::class, 'siswaLogout'])->name('logout');
 
     // Pengaturan
     Route::get('/keamanan', [Keamanan::class, 'index'])->name('keamanan');

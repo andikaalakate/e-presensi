@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\WaliKelas;
 use Illuminate\Http\Request;
 
 class Dashboard extends Controller

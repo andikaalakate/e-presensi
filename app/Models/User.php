@@ -11,6 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
+    protected $guard = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +19,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
+        'jenis_kelamin',
+        'tanggal_lahir',
+        'alamat',
+        'no_hp',
+        'foto',
     ];
 
     /**
