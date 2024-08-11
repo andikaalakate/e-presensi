@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('presensis', function (Blueprint $table) {
             $table->string('nisn', 20)->primary();
-            $table->enum('status', ['Hadir', 'Alpha', 'Sakit', 'Izin']);
-            $table->time('jam_masuk')->unique();
+            $table->enum('status', ['Hadir', 'Alpha', 'Sakit', 'Izin', 'Terlambat']);
+            $table->time('jam_masuk')->nullable();
             $table->time('jam_pulang')->nullable();
             $table->timestamps();
 

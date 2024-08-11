@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
 {
@@ -12,8 +14,18 @@ class PresensiController extends Controller
      */
     public function index()
     {
+        $presensis = Presensi::with('siswa.kelas.jurusan', 'siswa.kelas.tahunAjaran')->get();
+
+        $status = $presensis->where('nisn', Auth::user()->nisn)->first();
+
+        if (!$status) {
+            $statusAbsensi = "Masuk";
+        } else {
+            $statusAbsensi = "Pulang";
+        }
         return view('auth.siswa.pages.presensi', [
             'title' => 'Presensi',
+            'status' => $statusAbsensi
         ]);
     }
 

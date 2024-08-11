@@ -3,6 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
+        "sendwa": "node resources/js/sendwa.cjs",
         "build": "vite build"
     },
     "devDependencies": {
@@ -15,6 +16,11 @@
     },
     "dependencies": {
         "alpinejs": "^3.14.1",
-        "boxicons": "^2.1.4"
+        "boxicons": "^2.1.4",
+        "chromium": "^3.0.3",
+        "puppeteer": "^23.0.2",
+        "qrcode-terminal": "^0.12.0",
+        "sweetalert": "^2.1.2",
+        "whatsapp-web.js": "^1.25.0"
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     use HasFactory;
+    protected $table = 'siswas';
 
     protected $fillable = [
         'nisn',
@@ -24,5 +25,15 @@ class Siswa extends Model
     public function kelas()
     {
         return $this->belongsTo(Kelas::class);
+    }
+
+    public function siswaLogin()
+    {
+        return $this->belongsTo(SiswaLogin::class);
+    }
+
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'nisn', 'nisn');
     }
 }
