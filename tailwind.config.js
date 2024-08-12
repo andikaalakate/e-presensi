@@ -17,6 +17,5 @@ export default {
     theme: {
         extend: {},
     },
-
-    plugins: [forms, typography],
+    plugins: [forms, typography, require('tailwind-scrollbar')],
 };
