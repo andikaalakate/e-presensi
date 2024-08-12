@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->group('splade', [\ProtoneMedia\Splade\Http\SpladeMiddleware::class]);
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
@@ -30,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->renderable(\ProtoneMedia\Splade\SpladeCore::exceptionHandler($exceptions->handler));
         $exceptions->renderable(function (UnauthorizedException $e) {
             return response()->view('auth.errors.unauthorized', [
                 'exception' => "Kamu tidak memiliki izin untuk dapat mengakses halaman ini.",
