@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\SiswaLogin;
+use App\Models\User;
+
 return [
 
     /*
@@ -40,6 +43,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
+        'siswa' => [
+            'driver' => 'session',
+            'provider' => 'siswas',
+        ],
     ],
 
     /*
@@ -62,13 +75,18 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => SiswaLogin::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => User::class,
+        ],
+
+        'siswas' => [
+            'driver' => 'eloquent',
+            'model' => SiswaLogin::class,
+        ],
     ],
 
     /*
