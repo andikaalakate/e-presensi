@@ -19,7 +19,9 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswas = Siswa::with('kelas', 'presensi', 'siswaLogin')->get();
+        $query = Siswa::with('kelas', 'presensi', 'siswaLogin')->filterBySiswa();
+        $siswas = $query->paginate(5)->withQueryString();
+        
         return view('auth.admin.pages.siswa', [
             'title' => 'Siswa',
             'siswas' => $siswas

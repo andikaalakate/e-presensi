@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('body')
-    <form class="p-4 bg-slate-300 flex flex-col gap-4 rounded-md overflow-auto">
+    <form action="{{ route('admin.siswa.store') }}" method="POST" class="p-4 bg-slate-300 flex flex-col gap-4 rounded-md overflow-auto">
+        @method('POST')
+        @csrf
         <div class="flex flex-wrap gap-4">
             <div class="flex flex-col gap-4 flex-grow">
                 <label class="flex flex-col gap-1">
@@ -44,9 +46,11 @@
                 <label class="flex flex-col gap-1">
                     <span class="font-medium">Kelas</span>
                     <select name="" id="" class="px-3 w-full py-1 rounded-md outline-none">
-                        <option value="X">X</option>
-                        <option value="XI">XI</option>
-                        <option value="XII">XII</option>
+                        <option selected disabled>Pilih Kelas</option>
+                        @foreach ($kelas as $k)
+                            <option value="{{ $k->id }}" {{ old('kelas_id') == $k->id ? 'selected' : '' }}>
+                                {{ $k->nama_kelas }}</option>
+                        @endforeach
                     </select>
                 </label>
                 <label class="flex flex-col gap-1">

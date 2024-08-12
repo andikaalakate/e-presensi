@@ -43,7 +43,7 @@ Route::name('admin.')->prefix('admin')->middleware(['splade', 'auth:admin', 'aut
     });
 
     // Jurusan
-    Route::get('/jurusan', [JurusanController::class, 'index'])->name('jurusan');
+    Route::get('/jurusan', [JurusanController::class, 'index'])->middleware(['permission:lihat-jurusan'])->name('jurusan');
     Route::name('jurusan.')->prefix('jurusan')->group(function () {
         Route::get('/create', [JurusanController::class, 'create'])->name('create');
         Route::post('/store', [JurusanController::class, 'store'])->name('store');
