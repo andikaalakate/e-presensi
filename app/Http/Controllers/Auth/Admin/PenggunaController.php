@@ -15,7 +15,9 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        $penggunas = User::get();
+        $query = User::latest()->filterByUser();
+        $penggunas = $query->paginate(5)->withQueryString();
+
         return view('auth.admin.pages.pengguna', [
             'title' => 'Pengguna',
             'penggunas' => $penggunas

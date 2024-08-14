@@ -23,4 +23,22 @@ class Skor extends Model
     {
         return $this->belongsTo(Presensi::class);
     }
+
+    public function scopeFilterBySiswa($query)
+    {
+        if ($search = request('search')) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('nama_lengkap', 'like', '%' . $search . '%')
+                    ->orWhere('nisn', 'like', '%' . $search . '%')
+                    ->orWhereHas('kelas', function ($query) use ($search) {
+                        $query->where('nama_kelas', 'like', '%' . $search . '%')
+                            ->orWhereHas('jurusan', function ($query) use ($search) {
+                                $query->where('nama_jurusan', 'like', '%' . $search . '%');
+                            });
+                    });
+            });
+        }
+
+        return $query;
+    }
 }

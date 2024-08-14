@@ -10,6 +10,7 @@ use App\Models\SiswaLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use ProtoneMedia\Splade\Facades\Toast;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SiswaController extends Controller
@@ -21,7 +22,7 @@ class SiswaController extends Controller
     {
         $query = Siswa::with('kelas', 'presensi', 'siswaLogin')->filterBySiswa();
         $siswas = $query->paginate(5)->withQueryString();
-        
+
         return view('auth.admin.pages.siswa', [
             'title' => 'Siswa',
             'siswas' => $siswas
@@ -34,7 +35,7 @@ class SiswaController extends Controller
     public function create()
     {
         $kelas = Kelas::all();
-        
+
         return view('auth.admin.siswa.pages.create', [
             'title' => 'Tambah Siswa',
             'kelas' => $kelas
@@ -80,8 +81,13 @@ class SiswaController extends Controller
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
-            $errorMessage = implode('<br>', $errors);
-            Alert::error('Terjadi Kesalahan!', $errorMessage);
+            $errorMessage = implode("\n", $errors);
+
+            Toast::title('Error!')
+                ->warning()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message($errorMessage);
             return redirect()->back()->withInput();
         }
 
@@ -115,11 +121,19 @@ class SiswaController extends Controller
             $siswaLogin->save();
 
             DB::commit();
-            Alert::success('Success', 'Siswa Berhasil Ditambahkan!');
+            Toast::title('Sukses!')
+                ->success()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Siswa Berhasil Ditambahkan!');
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::error('Error', 'Gagal Menambahkan Siswa!' . $e->getMessage());
+            Toast::title('Terjadi Kesalahan!')
+                ->danger()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Gagal Menambahkan Siswa! ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -143,17 +157,24 @@ class SiswaController extends Controller
     public function edit(string $id)
     {
         $siswa = Siswa::with('kelas', 'presensi', 'siswaLogin')->find($id);
+        $kelas = Kelas::all(['id', 'nama_kelas']);
+        $jk = [
+            ['nama' => 'Laki-Laki', 'value' => 'Laki-Laki'],
+            ['nama' => 'Perempuan', 'value' => 'Perempuan'],
+        ];
 
         return view('auth.admin.siswa.pages.edit', [
             'title' => 'Edit Siswa',
-            'siswa' => $siswa
+            'siswa' => $siswa,
+            'kelas' => $kelas,
+            'jk' => $jk
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $nisn)
     {
         $messages = [
             'nisn.required' => 'NISN harus diisi.',
@@ -169,31 +190,39 @@ class SiswaController extends Controller
             'foto.image' => 'Foto harus berupa file gambar.',
             'foto.mimes' => 'Foto harus memiliki format jpeg, png, jpg, gif, atau svg.',
             'foto.max' => 'Foto tidak boleh lebih dari 2MB.',
+            'kelas_id.required' => 'Kelas harus dipilih.',
+            'kelas_id.exists' => 'Kelas yang dipilih tidak valid.',
         ];
 
         $validator = Validator::make($request->all(), [
-            'nisn' => 'required|unique:siswas,nisn,' . $id,
+            'nisn' => 'required|unique:siswas,nisn,' . $nisn . ',nisn',
             'nama_lengkap' => 'required|string',
             'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'nullable|string',
-            'email' => 'nullable|email|unique:siswas,email,' . $id,
+            'email' => 'nullable|email|unique:siswas,email,' . $nisn . ',nisn',
             'no_telp' => 'nullable',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'nullable|min:8',
+            'kelas_id' => 'required|exists:kelas,id',
         ], $messages);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
-            $errorMessage = implode('<br>', $errors);
-            Alert::error('Terjadi Kesalahan!', $errorMessage);
+            $errorMessage = implode("\n", $errors);
+
+            Toast::title('Error!')
+                ->danger()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message($errorMessage);
             return redirect()->back()->withInput();
         }
 
         try {
             DB::beginTransaction();
 
-            $siswa = Siswa::find($id);
+            $siswa = Siswa::where('nisn', $nisn)->firstOrFail();
             $siswa->update($request->only([
                 'nisn',
                 'nama_lengkap',
@@ -203,6 +232,7 @@ class SiswaController extends Controller
                 'email',
                 'no_telp',
                 'foto',
+                'kelas_id',
             ]));
 
             if ($request->hasFile('foto')) {
@@ -219,11 +249,13 @@ class SiswaController extends Controller
             }
 
             DB::commit();
-            Alert::success('Success', 'Siswa Berhasil Diubah!');
+            Toast::title('Sukses!')->success()->autoDismiss(5)
+                ->rightTop()->message('Siswa Berhasil Diubah!');
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::error('Error', 'Gagal Mengubah Siswa!' . $e->getMessage());
+            Toast::title('Error!')->success()->autoDismiss(5)
+                ->rightTop()->message('Gagal Mengubah Siswa!' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -240,11 +272,11 @@ class SiswaController extends Controller
             $siswa->delete();
 
             DB::commit();
-            Alert::success('Success', 'Siswa Berhasil Dihapus!');
+            Toast::title('Sukses!')->success()->rightTop()->autoDismiss(5)->message('Siswa Berhasil Dihapus!');
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::error('Error', 'Gagal Menghapus Siswa!' . $e->getMessage());
+            Toast::title('Error!')->danger()->rightTop()->autoDismiss(5)->message('Gagal Menghapus Siswa!' . $e->getMessage());
             return redirect()->back();
         }
     }

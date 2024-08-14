@@ -37,9 +37,7 @@
         @endif
     </x-splade-lazy>
 
-    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4">
+    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
         <x-pagination-items :paginator="$siswas" route="{{ route('admin.siswa') }}" />
     </div>
-
-
 @endsection

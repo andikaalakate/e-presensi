@@ -51,4 +51,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function scopeFilterByUser($query)
+    {
+        if ($search = request('search')) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('nama', 'like', '%' . $search . '%');
+            });
+        }
+
+        return $query;
+    }
 }

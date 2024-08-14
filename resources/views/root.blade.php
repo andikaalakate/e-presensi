@@ -21,10 +21,12 @@
     <link rel="icon" href="{{ asset('assets/logo-gadak-std.png') }}">
 
     @spladeHead
-    @vite(['resources/css/app.css','resources/js/app.js'])
+    @vite(['resources/js/app.js'])
 </head>
 
-<body class="bg-slate-200 font-[Poppins]" v-bind="{ isOpen: false }" @click.away="isOpen = false">
+<body class="{{ request()->routeIs('admin.login', 'login') ? 'bg-[#1d1d1d]' : 'bg-[#fff7fc]' }}
+font-[Poppins]"
+    v-bind="{ navigation.isOpen: false }" @click.away="navigation.isOpen = false">
     @splade()
 </body>
 

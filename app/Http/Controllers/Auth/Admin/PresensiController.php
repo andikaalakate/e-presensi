@@ -29,10 +29,8 @@ class PresensiController extends Controller
     {
         $nisn = $request->query('nisn');
 
-        // Cari siswa berdasarkan NISN dengan relasi kelas, jurusan, dan tahun ajaran
         $siswa = Siswa::with('kelas.jurusan', 'kelas.tahunAjaran')->where('nisn', $nisn)->first();
 
-        // Tentukan default foto berdasarkan jenis kelamin
         $default_foto = $siswa && $siswa->jenis_kelamin == 'Laki-Laki' ? 'default-l.png' : 'default-p.png';
 
         if ($siswa) {
@@ -42,7 +40,7 @@ class PresensiController extends Controller
                 'jurusan_nama' => $siswa->kelas->jurusan->nama_jurusan ?? 'Tidak ada jurusan',
                 'tahun_mulai' => $siswa->kelas->tahunAjaran->tahun_mulai ?? 'Tidak ada data tahun ajaran',
                 'tahun_berakhir' => $siswa->kelas->tahunAjaran->tahun_selesai ?? 'Tidak ada data tahun ajaran',
-                'foto' => $siswa->foto ? asset('storage/' . $siswa->foto) : asset('storage/' . $default_foto),
+                'foto' => $siswa->foto ? asset('storage/' . $siswa->foto) : asset($default_foto),
             ]);
         }
 
@@ -74,12 +72,13 @@ class PresensiController extends Controller
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
-            $errorMessage = $errors;
+            $errorMessage = implode("\n", $errors);
+
             Toast::title('Error!')
-                ->warning()
-                ->rightTop()
-                ->autoDismiss(5)
-                ->message($errorMessage);
+            ->warning()
+            ->rightTop()
+            ->autoDismiss(5)
+            ->message($errorMessage);
             return redirect()->back()->withInput();
         }
 

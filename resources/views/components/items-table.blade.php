@@ -1,5 +1,5 @@
 <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4">
-    <div class="border border-slate-300 rounded-md overflow-hidden">
+    <div class="border border-slate-300 rounded-md overflow-auto">
         <table class="w-full bg-slate-300">
             @foreach ($fields as $field)
                 <tr class="odd:bg-slate-400">

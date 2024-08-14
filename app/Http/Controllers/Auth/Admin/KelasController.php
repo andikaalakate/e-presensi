@@ -16,7 +16,8 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::with('jurusan', 'tahunAjaran')->get();
+        $query = Kelas::with('jurusan', 'tahunAjaran')->latest()->filterByKelas();
+        $kelas = $query->paginate(5)->withQueryString();
 
         return view('auth.admin.pages.kelas', [
             'title' => 'Kelas',
