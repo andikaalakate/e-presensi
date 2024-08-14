@@ -1,19 +1,21 @@
 import "./bootstrap";
-import "../css/app.css";
 import "@protonemedia/laravel-splade/dist/style.css";
+import "../css/app.css";
 import "boxicons";
-import { createApp } from "vue/dist/vue.esm-bundler.js";
+import axios from "axios";
+import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler.js";  
 import { renderSpladeApp, SpladePlugin } from "@protonemedia/laravel-splade";
 
 const el = document.getElementById("app");
 
 createApp({
-    render: renderSpladeApp({ el })
+    render: renderSpladeApp({ el }),
 })
     .use(SpladePlugin, {
         "max_keep_alive": 10,
         "transform_anchors": false,
         "progress_bar": true
     })
+    .component('Presensi', defineAsyncComponent(() => import("./Components/Presensi.vue")))
     .mount(el);
 

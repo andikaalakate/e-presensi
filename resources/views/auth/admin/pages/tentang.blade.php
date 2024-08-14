@@ -1,4 +1,4 @@
-@extends('layouts.siswa')
+@extends('layouts.admin')
 
 @section('body')
     <div class=" flex flex-wrap ">

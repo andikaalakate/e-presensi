@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('presensis', function (Blueprint $table) {
-            $table->string('nisn', 20)->primary();
+            $table->id();
+            $table->string('nisn', 20);
             $table->enum('status', ['Hadir', 'Alpha', 'Sakit', 'Izin', 'Terlambat']);
             $table->time('jam_masuk')->nullable();
             $table->time('jam_pulang')->nullable();

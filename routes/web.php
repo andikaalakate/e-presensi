@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['splade'])->group(function () {
-    Route::get('/', fn () => view('home'))->name('home');
-    Route::get('/docs', fn () => view('docs'))->name('docs');
+    Route::get('/', function () {
+        return Auth::guard('admin')->check() ? redirect('/admin') : redirect('/siswa');
+    });
 
     // Registers routes to support the interactive components...
     Route::spladeWithVueBridge();
@@ -28,4 +30,8 @@ Route::middleware(['splade'])->group(function () {
 
     // Registers routes to support async File Uploads with Filepond...
     Route::spladeUploads();
+
+    require __DIR__ . '/auth.php';
+    require __DIR__ . '/admin.php';
+    require __DIR__ . '/siswa.php';
 });

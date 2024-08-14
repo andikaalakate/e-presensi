@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Skor;
 use Illuminate\Http\Request;
 
 class PeringkatController extends Controller
@@ -12,8 +13,12 @@ class PeringkatController extends Controller
      */
     public function index()
     {
+        $query = Skor::with('presensi')->filterBySiswa();
+        $peringkat = $query->paginate(5)->withQueryString();
+
         return view('auth.admin.pages.peringkat', [
             'title' => 'Peringkat',
+            'peringkat' => $peringkat
         ]);
     }
 

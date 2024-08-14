@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use ProtoneMedia\Splade\Facades\Toast;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PresensiController extends Controller
@@ -26,13 +27,11 @@ class PresensiController extends Controller
 
     public function autofill(Request $request)
     {
-        $siswa = Siswa::with('kelas.jurusan', 'kelas.tahunAjaran')->where('nisn', $request->nisn)->first();
+        $nisn = $request->query('nisn');
 
-        if ($siswa->jenis_kelamin == 'Laki-Laki') {
-            $default_foto = 'default-l.png';
-        } else {
-            $default_foto = 'default-p.png';
-        }
+        $siswa = Siswa::with('kelas.jurusan', 'kelas.tahunAjaran')->where('nisn', $nisn)->first();
+
+        $default_foto = $siswa && $siswa->jenis_kelamin == 'Laki-Laki' ? 'default-l.png' : 'default-p.png';
 
         if ($siswa) {
             return response()->json([
@@ -41,12 +40,13 @@ class PresensiController extends Controller
                 'jurusan_nama' => $siswa->kelas->jurusan->nama_jurusan ?? 'Tidak ada jurusan',
                 'tahun_mulai' => $siswa->kelas->tahunAjaran->tahun_mulai ?? 'Tidak ada data tahun ajaran',
                 'tahun_berakhir' => $siswa->kelas->tahunAjaran->tahun_selesai ?? 'Tidak ada data tahun ajaran',
-                'foto' => $siswa->foto ?? $default_foto,
+                'foto' => $siswa->foto ? asset('storage/' . $siswa->foto) : asset($default_foto),
             ]);
         }
 
-        return response()->json(null);
+        return response()->json(['message' => 'Siswa tidak ditemukan'], 404);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -72,8 +72,13 @@ class PresensiController extends Controller
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
-            $errorMessage = $errors;
-            Alert::toast($errorMessage, 'error');
+            $errorMessage = implode("\n", $errors);
+
+            Toast::title('Error!')
+            ->warning()
+            ->rightTop()
+            ->autoDismiss(5)
+            ->message($errorMessage);
             return redirect()->back()->withInput();
         }
 
@@ -98,11 +103,23 @@ class PresensiController extends Controller
             } else {
                 $result = $presensiHariIni->recordPulang();
                 if ($result === true) {
-                    Alert::toast('Presensi pulang berhasil disimpan!', 'success');
+                    Toast::title('Sukses!')
+                        ->success()
+                        ->rightTop()
+                        ->autoDismiss(2)
+                        ->message('Presensi pulang berhasil disimpan!');
                 } elseif ($result === false) {
-                    Alert::toast('Waktu presensi harus lewat dari 14:00!', 'error');
+                    Toast::title('Error!')
+                        ->warning()
+                        ->rightTop()
+                        ->autoDismiss(5)
+                        ->message('Waktu presensi harus lewat dari 14:00!');
                 } else {
-                    Alert::toast('Anda sudah melakukan presensi hari ini!', 'error');;
+                    Toast::title('Error!')
+                        ->warning()
+                        ->rightTop()
+                        ->autoDismiss(5)
+                        ->message('Anda sudah melakukan presensi hari ini!');;
                 }
 
                 DB::commit();
@@ -111,12 +128,20 @@ class PresensiController extends Controller
 
             DB::commit();
 
-            Alert::toast('Data presensi berhasil disimpan!', 'success');
+            Toast::title('Sukses!')
+                ->success()
+                ->rightTop()
+                ->autoDismiss(2)
+                ->message('Data presensi berhasil disimpan!');
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Alert::toast('Gagal menyimpan data presensi!' . $e->getMessage(), 'error');
+            Toast::title('Error!')
+                ->warning()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Gagal menyimpan data presensi!' . $e->getMessage());
             return redirect()->back();
         }
     }
