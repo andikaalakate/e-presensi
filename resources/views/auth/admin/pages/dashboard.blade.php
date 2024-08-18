@@ -1,6 +1,9 @@
-@extends('layouts.admin')
+<x-layouts.admin>
+    @seoTitle('Admin - Dashboard')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
 
-@section('body')
     <div class="flex rounded-sm gap-4 flex-wrap">
         @if (auth()->user()->hasRole('admin'))
             <div class="flex-grow h-80 bg-[#1a81bd] aspect-square max-h-80 min-w-60 p-2 rounded-sm">
@@ -38,4 +41,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-layouts.admin>

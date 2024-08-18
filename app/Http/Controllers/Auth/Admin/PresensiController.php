@@ -20,8 +20,12 @@ class PresensiController extends Controller
      */
     public function index()
     {
+        $query = Presensi::latest();
+        $presensis = $query->paginate(10);
+
         return view('auth.admin.pages.presensi', [
             'title' => 'Presensi',
+            'presensis' => $presensis
         ]);
     }
 
@@ -35,7 +39,9 @@ class PresensiController extends Controller
 
         if ($siswa) {
             return response()->json([
+                'nisn' => $siswa->nisn,
                 'nama' => $siswa->nama_lengkap,
+                'jenis_kelamin' => $siswa->jenis_kelamin,
                 'kelas_nama' => $siswa->kelas->nama_kelas ?? 'Tidak ada kelas',
                 'jurusan_nama' => $siswa->kelas->jurusan->nama_jurusan ?? 'Tidak ada jurusan',
                 'tahun_mulai' => $siswa->kelas->tahunAjaran->tahun_mulai ?? 'Tidak ada data tahun ajaran',
@@ -53,7 +59,9 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.admin.presensi.pages.create', [
+            'title' => 'Presensi',
+        ]);
     }
 
     /**

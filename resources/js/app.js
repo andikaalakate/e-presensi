@@ -12,10 +12,11 @@ createApp({
     render: renderSpladeApp({ el }),
 })
     .use(SpladePlugin, {
-        "max_keep_alive": 10,
+        "max_keep_alive": 50,
         "transform_anchors": false,
         "progress_bar": true
     })
     .component('Presensi', defineAsyncComponent(() => import("./Components/Presensi.vue")))
+    .component('Navbar', defineAsyncComponent(() => import("./Components/Navbar.vue")))
     .mount(el);
 

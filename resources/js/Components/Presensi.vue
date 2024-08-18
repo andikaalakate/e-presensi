@@ -1,77 +1,94 @@
 <template>
-    <div>
-        <label for="foto" class="block text-sm font-medium text-gray-700"
-            >Foto</label
-        >
-        <div
-            class="relative w-32 h-32 rounded-md border-2 border-black overflow-hidden"
-        >
-            <img
-                :src="form.foto"
-                :alt="form.nama"
-                class="object-cover w-full h-full"
-            />
+    <div class="bg-slate-200 p-2 md:p-4 rounded-md">
+        <div class="flex flex-wrap gap-8">
+            <div class="max-w-96 flex-grow min-w-60">
+                <img
+                    :src="forms.foto"
+                    :alt="forms.nama"
+                    class="bg-slate-300 aspect-[3/4]"
+                />
+            </div>
+            <div class="flex-grow flex flex-col gap-4">
+                <label class="flex flex-col">
+                    <span>NISN</span>
+                    <input
+                        type="text"
+                        id="nisn"
+                        inputmode="numeric"
+                        autofocus
+                        v-model="form.nisn"
+                        class="w-full rounded-xl bg-[#fff] border-b-2 border-[#4f4f4f]"
+                    />
+                </label>
+                <label class="flex flex-col">
+                    <span>Nama</span>
+                    <input
+                        v-model="forms.nama"
+                        type="text"
+                        class="w-full rounded-xl bg-[#fff] border-b-2 border-[#4f4f4f]"
+                        readonly
+                        disabled
+                    />
+                </label>
+                <label class="flex flex-col">
+                    <span>Jenis Kelamin</span>
+                    <input
+                        v-model="forms.jenis_kelamin"
+                        type="text"
+                        class="w-full rounded-xl bg-[#fff] border-b-2 border-[#4f4f4f]"
+                        readonly
+                        disabled
+                    />
+                </label>
+                <label class="flex flex-col">
+                    <span>Kelas</span>
+                    <input
+                        v-model="forms.kelas"
+                        type="text"
+                        class="w-full rounded-xl bg-[#fff] border-b-2 border-[#4f4f4f]"
+                        readonly
+                        disabled
+                    />
+                </label>
+                <label class="flex flex-col">
+                    <span>Jurusan</span>
+                    <input
+                        v-model="forms.jurusan"
+                        type="text"
+                        class="w-full rounded-xl bg-[#fff] border-b-2 border-[#4f4f4f]"
+                        readonly
+                        disabled
+                    />
+                </label>
+                <button
+                    class="text-[#fff7fc] font-medium mt-2 p-2 cursor-pointer bg-[#005A8D] rounded-xl"
+                    type="submit"
+                    value="Kirim"
+                >Kirim</button>
+            </div>
         </div>
     </div>
-    <div>
-        <label for="nama" class="block text-sm font-medium text-gray-700"
-            >Nama</label
-        >
-        <input
-            type="text"
-            id="nama"
-            :value="form.nama"
-            readonly
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-gray-100"
-        />
-    </div>
-    <div>
-        <label for="kelas" class="block text-sm font-medium text-gray-700"
-            >Kelas</label
-        >
-        <input
-            type="text"
-            id="kelas"
-            :value="form.kelas"
-            readonly
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-gray-100"
-        />
-    </div>
-    <div>
-        <label for="jurusan" class="block text-sm font-medium text-gray-700"
-            >Jurusan</label
-        >
-        <input
-            type="text"
-            id="jurusan"
-            :value="form.jurusan"
-            readonly
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-gray-100"
-        />
-    </div>
-    <div>
-        <label for="tahunAjaran" class="block text-sm font-medium text-gray-700"
-            >Tahun Ajaran</label
-        >
-        <input
-            type="text"
-            id="tahunAjaran"
-            :value="form.tahunAjaran"
-            readonly
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-gray-100"
-        />
-    </div>
 </template>
+
+<script setup>
+defineProps({
+    form: {
+        type: Object,
+        required: true,
+    },
+});
+</script>
 
 <script>
 export default {
     data() {
         return {
-            form: {
+            forms: {
                 nisn: "",
                 foto: "",
                 nama: "",
                 kelas: "",
+                jenis_kelamin: "",
                 jurusan: "",
                 tahunAjaran: "",
             },
@@ -82,11 +99,11 @@ export default {
     },
     methods: {
         getNISNValue() {
-            const nisnInput = document.getElementById('nisn');
+            const nisnInput = document.getElementById("nisn");
 
-            nisnInput.addEventListener('input', (event) => {
+            nisnInput.addEventListener("input", (event) => {
                 const nisn = event.target.value;
-                if (nisn.length >= 8) {
+                if (nisn.length >= 11) {
                     this.fetchData(nisn);
                 } else {
                     this.resetFields();
@@ -97,12 +114,15 @@ export default {
             fetch(`/admin/presensi/autofill?nisn=${nisn}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    this.form.foto = data.foto || "";
-                    this.form.nama = data.nama || "Tidak ada data siswa";
-                    this.form.kelas = data.kelas_nama || "Tidak ada data siswa";
-                    this.form.jurusan =
+                    this.forms.nisn = data.nisn || "";
+                    this.forms.foto = data.foto || "";
+                    this.forms.nama = data.nama || "Tidak ada data siswa";
+                    this.forms.jenis_kelamin =
+                        data.jenis_kelamin || "Tidak ada data siswa";
+                    this.forms.kelas = data.kelas_nama || "Tidak ada data siswa";
+                    this.forms.jurusan =
                         data.jurusan_nama || "Tidak ada data siswa";
-                    this.form.tahunAjaran =
+                    this.forms.tahunAjaran =
                         data.tahun_mulai && data.tahun_berakhir
                             ? `${data.tahun_mulai} - ${data.tahun_berakhir}`
                             : "Tidak ada data siswa";
@@ -112,11 +132,12 @@ export default {
                 });
         },
         resetFields() {
-            this.form.foto = "";
-            this.form.nama = "Tidak ada data siswa";
-            this.form.kelas = "Tidak ada data siswa";
-            this.form.jurusan = "Tidak ada data siswa";
-            this.form.tahunAjaran = "Tidak ada data siswa";
+            this.forms.foto = "";
+            this.forms.nama = "Tidak ada data siswa";
+            this.forms.jenis_kelamin = "Tidak ada data siswa";
+            this.forms.kelas = "Tidak ada data siswa";
+            this.forms.jurusan = "Tidak ada data siswa";
+            this.forms.tahunAjaran = "Tidak ada data siswa";
         },
     },
 };

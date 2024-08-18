@@ -1,6 +1,8 @@
-@extends('layouts.admin')
-
-@section('body')
+<x-layouts.admin>
+    @seoTitle('Admin - Kelas')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
     <div class="bg-slate-200 p-2 md:p-4 rounded-md">
         <div class="flex items-center justify-between gap-2">
             <x-search-form route="" value="{{ request('search') }}" placeholder="Cari..." />
@@ -34,4 +36,5 @@
     <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
         <x-pagination-items :paginator="$kelas" route="{{ route('admin.kelas') }}" />
     </div>
-@endsection
+</x-layouts.admin>
+
