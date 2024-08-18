@@ -8,7 +8,7 @@
                 <span class="ml-4">Nomor Induk Siswa</span>
                 <div class="flex items-center gap-3">
                     <box-icon name='user-circle' class="size-8"></box-icon>
-                    <input type="text" name="nisn"
+                    <input type="text" name="nisn" inputmode="numeric"
                         class="flex w-full py-2 px-3 outline-none rounded-xl bg-[#fff] duration-700 border-b-2 border-[#4f4f4f]"
                         required>
                 </div>

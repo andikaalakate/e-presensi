@@ -23,7 +23,7 @@ class Presensi extends Model
 
     public function siswa()
     {
-        return $this->belongsTo(Siswa::class);
+        return $this->belongsTo(Siswa::class, 'nisn', 'nisn');
     }
 
     public function updateSkor()

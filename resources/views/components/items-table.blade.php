@@ -12,17 +12,17 @@
                 <tr class="odd:bg-slate-400">
                     <td class="font-semibold p-2 w-40">Action</td>
                     <td class="p-2">:</td>
-                    <td class="p-2" class="flex justify-start gap-4">
+                    <td class="p-2 flex justify-start gap-4">
                         <Link href="{{ $actions['edit']['url'] }}" class="bg-[#788d00] text-white py-1 px-3 rounded-sm">
                             {{ $actions['edit']['label'] }}
                         </Link>
-                        <form action="{{ $actions['delete']['url'] }}" method="POST">
+                        <x-splade-form action="{{ $actions['delete']['url'] }}" method="DELETE">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-[#8d0500] text-white py-1 px-3 rounded-sm">
                                 {{ $actions['delete']['label'] }}
                             </button>
-                        </form>
+                        </x-splade-form>
                     </td>
                 </tr>
             @endif

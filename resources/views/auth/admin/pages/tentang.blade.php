@@ -1,6 +1,8 @@
-@extends('layouts.admin')
-
-@section('body')
+<x-layouts.admin>
+    @seoTitle('Admin - Tentang')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
     <div class=" flex flex-wrap ">
         <div class="bg-slate-200 p-2 md:p-4 rounded-md my-2 md:my-0 md:mr-2 flex-grow md:max-w-[50%]">
             <h1 class="text-2xl font-semibold uppercase text-center my-2">Apa itu e-Presensi ?</h1>
@@ -58,4 +60,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-layouts.admin>

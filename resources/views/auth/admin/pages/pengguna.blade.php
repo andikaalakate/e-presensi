@@ -1,6 +1,8 @@
-@extends('layouts.admin')
-
-@section('body')
+<x-layouts.admin>
+    @seoTitle('Admin - Pengguna')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
     <div class="bg-slate-200 p-2 md:p-4 rounded-md">
         <div class="flex items-center justify-between gap-2">
             <x-search-form route="" value="{{ request('search') }}" placeholder="Cari..." />
@@ -24,7 +26,7 @@
                         <th class="p-2">No</th>
                         <th class="p-2">Nama</th>
                         <th class="p-2">Email</th>
-                        <th class="p-2">Peran</th>
+                        <th class="p-2">Role</th>
                         <th class="p-2">Aksi</th>
                     </tr>
                 </thead>
@@ -33,7 +35,7 @@
                         <tr class="even:bg-slate-400 font-medium border-b border-slate-400">
                             <td class="text-center p-2 border-r border-slate-300">{{ $index + 1 }}</td>
                             <td class="text-center p-2 border-r border-slate-300">{{ $pengguna->nama }}</td>
-                            <td class="text-center p-2">{{ $pengguna->email }}</td>
+                            <td class="text-center p-2 border-r border-slate-300">{{ $pengguna->email }}</td>
                             <td class="text-center p-2">
                                 @if (!empty($pengguna->getRoleNames()))
                                     @foreach ($pengguna->getRoleNames() as $v)
@@ -41,7 +43,7 @@
                                     @endforeach
                                 @endif
                             </td>
-                            <td class="p-2" class="flex justify-center gap-4 border-l border-slate-300">
+                            <td class="p-2 flex justify-center gap-4 border-l border-slate-300">
                                 <Link href="{{ route('admin.pengguna.edit', $pengguna->id) }}" class="bg-[#788d00] text-white py-1 px-3 rounded-sm">
                                 Edit
                                 </Link>
@@ -61,4 +63,4 @@
     <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
         <x-pagination-items :paginator="$penggunas" route="{{ route('admin.pengguna') }}" />
     </div>
-@endsection
+</x-layouts.admin>

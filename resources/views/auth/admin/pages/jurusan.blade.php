@@ -1,5 +1,6 @@
-@extends('layouts.admin')
-
-@section('body')
+<x-layouts.admin>
     @seoTitle('Admin - Jurusan')
-@endsection
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
+</x-layouts.admin>
