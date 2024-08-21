@@ -26,12 +26,12 @@
                 class="my-4 w-full bg-[#005A8D] py-2 px-3 text-[#fff7fc] rounded-lg">Masuk</x-splade-submit>
         </x-splade-form>
         <div class="absolute bottom-0 right-0 p-2 w-full">
-            <h2 class="font-medium">Partner : </h2>
             <div class="flex flex-wrap justify-end">
                 <img class="h-20 " src="{{ asset('assets/logo-gadak-std.png') }}" alt="">
             </div>
         </div>
     </div>
     <img src="{{ asset('assets/background-login-2.jpg') }}" class="fixed top-0 left-0 h-screen w-full opacity-35"
-        alt="">
+        alt="SMK Swasta Jambi Medan">
+    <Link class="fixed top-5 left-0 py-2 px-4 bg-white border-2 border-[#005A8D] rounded-[0_50px_50px_0] border-l-0 z-20 shadow-md font-medium" href="{{ route('login') }}">< Siswa</Link>
 </div>

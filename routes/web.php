@@ -14,15 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::fallback(function () {
-    return view('vendor.laravelpwa.offline');
-});
+
 
 Route::middleware(['splade'])->group(function () {
     Route::get('/', function () {
-        return Auth::guard('admin')->check() ? redirect('/admin') : redirect('/siswa');
+        return view("welcome");
     });
 
+    Route::fallback(function () {
+        return view('offline-page');
+    });
 
     // Registers routes to support the interactive components...
     Route::spladeWithVueBridge();
