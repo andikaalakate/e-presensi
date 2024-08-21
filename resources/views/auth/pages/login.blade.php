@@ -1,14 +1,14 @@
 <div class=" bg-[#1d1d1d]">
     <div class="fixed right-0 w-[520px] h-screen bg-slate-200 max-[524px]:w-full py-24 z-10">
         <h1 class="text-3xl font-[Poppins] text-center font-semibold ">Masuk</h1>
-        <form action="{{ route('admin.proses-login') }}" method="post" class="p-4 py-12 flex flex-col gap-8">
+        <x-splade-form action="{{ route('admin.proses-login') }}" method="post" class="p-4 py-12 flex flex-col gap-8">
             @method('POST')
             @csrf
             <label class="flex flex-col gap-2">
                 <span class="ml-4">Email</span>
                 <div class="flex items-center gap-3">
                     <box-icon name='user-circle' class="size-8"></box-icon>
-                    <input type="email" name="email"
+                    <input v-model="form.email" type="email"
                         class="flex w-full py-2 px-3 outline-none rounded-xl bg-[#fff] duration-700 border-b-2 border-[#4f4f4f]"
                         required>
                 </div>
@@ -17,13 +17,14 @@
                 <span class="ml-4">Kata Sandi</span>
                 <div class="flex items-center gap-3">
                     <box-icon name='key' class="size-8"></box-icon>
-                    <input type="password" name="password"
+                    <input v-model="form.password" type="password"
                         class="flex w-full py-2 px-3 outline-none rounded-xl bg-[#fff] duration-700 border-b-2 border-[#4f4f4f]"
                         required>
                 </div>
             </label>
-            <button type="submit" class="my-4 bg-[#005A8D] py-2 px-3 text-[#fff7fc] rounded-lg">Masuk</button>
-        </form>
+            <x-splade-submit
+                class="my-4 w-full bg-[#005A8D] py-2 px-3 text-[#fff7fc] rounded-lg">Masuk</x-splade-submit>
+        </x-splade-form>
         <div class="absolute bottom-0 right-0 p-2 w-full">
             <h2 class="font-medium">Partner : </h2>
             <div class="flex flex-wrap justify-end">

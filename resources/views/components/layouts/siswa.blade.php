@@ -1,7 +1,7 @@
 <x-splade-data store="navigation" default="{ isOpen: false }" />
 <x-navbar />
 
-<div class=" h-[calc(100vh-66px)] p-4 max-[768px]:p-3" v-SpladePreserveScroll:sidebar
+<div :class="{ 'z-0 blur-sm': navigation.isOpen, '': !navigation.isOpen }" class=" h-[calc(100vh-66px)] p-4 max-[768px]:p-3" v-SpladePreserveScroll:sidebar
     v-on:click.away="navigation.isOpen = false">
     <h1 class="m-2 text-3xl text-black font-semibold">{{ $title }}</h1>
     <div

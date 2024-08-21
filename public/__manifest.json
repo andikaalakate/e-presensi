@@ -1,0 +1,51 @@
+{
+    "name": "e-Presensi",
+    "short_name": "e-Presensi",
+    "publisher": "GADAK Developer",
+    "start_url": "/",
+    "display": "standalone",
+    "scope": "/",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "assets/icons/icon.png",
+            "type": "image/png",
+            "sizes": "72x72"
+        },
+        {
+            "src": "assets/icons/icon.png",
+            "type": "image/png",
+            "sizes": "96x96"
+        },
+        {
+            "src": "assets/icons/icon.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {
+            "src": "assets/icons/icon.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "assets/icons/icon.png",
+            "type": "image/png",
+            "sizes": "152x152"
+        },
+        {
+            "src": "assets/icons/android-chrome-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "assets/icons/icon.png",
+            "type": "image/png",
+            "sizes": "384x384"
+        },
+        {
+            "src": "assets/icons/android-chrome-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
