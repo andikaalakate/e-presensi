@@ -118,7 +118,7 @@
             class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
         <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
             <p class="text-white text-4xl">{{ isset($presensiAbsen) ? $presensiAbsen : 0 }}</p>
-            <p class="text-white text-sm">Alfa</p>
+            <p class="text-white text-sm">Tanpa Keterangan</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"

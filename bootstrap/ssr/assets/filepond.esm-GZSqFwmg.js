@@ -1,5 +1,5 @@
 /*!
- * FilePond 4.31.2
+ * FilePond 4.31.1
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -4873,6 +4873,7 @@ const create$b = ({ root: root2, props }) => {
   const label = createElement$1("label");
   attr(label, "for", `filepond--browser-${props.id}`);
   attr(label, "id", `filepond--drop-label-${props.id}`);
+  attr(label, "aria-hidden", "true");
   root2.ref.handleKeyDown = (e) => {
     const isActivationKey = e.keyCode === Key.ENTER || e.keyCode === Key.SPACE;
     if (!isActivationKey) return;
@@ -5652,8 +5653,9 @@ const create$e = ({ root: root2, props }) => {
   if (hasCredits) {
     const frag = document.createElement("a");
     frag.className = "filepond--credits";
+    frag.setAttribute("aria-hidden", "true");
     frag.href = credits[0];
-    frag.tabIndex = -1;
+    frag.tabindex = -1;
     frag.target = "_blank";
     frag.rel = "noopener noreferrer";
     frag.textContent = credits[1];

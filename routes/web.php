@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 
 
+    Route::get('offline', function () {
+        return view('offline-page');
+    });
+
 Route::middleware(['splade'])->group(function () {
     Route::get('/', function () {
         return view("welcome");
-    });
-
-    Route::fallback(function () {
-        return view('offline-page');
     });
 
     // Registers routes to support the interactive components...
