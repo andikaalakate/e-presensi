@@ -1,6 +1,8 @@
-@extends('layouts.admin')
-
-@section('body')
+<x-layouts.admin>
+    @seoTitle('Admin - Edit Siswa')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
     <x-splade-form :default="[
         'nisn' => $siswa->nisn,
         'nama_lengkap' => $siswa->nama_lengkap,
@@ -71,4 +73,4 @@
         </label>
         <x-splade-submit class="w-full py-1 rounded-md bg-[#005A8D] text-white cursor-pointer" value="Kirim" />
     </x-splade-form>
-@endsection
+</x-layouts.admin>

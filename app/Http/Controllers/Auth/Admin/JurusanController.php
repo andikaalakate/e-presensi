@@ -15,8 +15,12 @@ class JurusanController extends Controller
      */
     public function index()
     {
+        $query = Jurusan::with('kepalaJurusan', 'kelas')->latest();
+        $jurusans = $query->paginate(5);
+
         return view('auth.admin.pages.jurusan', [
             'title' => 'Jurusan',
+            'jurusans' => $jurusans,
         ]);
     }
 

@@ -1,3 +1,6 @@
-<div>
-    <!-- Simplicity is an acquired taste. - Katharine Gerould -->
-</div>
+<x-layouts.admin>
+    @seoTitle('Admin - Edit Profil')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
+</x-layouts.admin>

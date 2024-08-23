@@ -15,6 +15,6 @@ class TahunAjaran extends Model
 
     public function kelas()
     {
-        return $this->hasMany(Kelas::class);
+        return $this->hasMany(Kelas::class, 'tahun_ajaran_id','id');
     }
 }

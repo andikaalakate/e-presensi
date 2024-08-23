@@ -40,6 +40,11 @@ class Siswa extends Model
         return $this->hasMany(Presensi::class, 'nisn', 'nisn');
     }
 
+    public function skor()
+    {
+        return $this->hasMany(Skor::class, 'nisn', 'nisn');
+    }
+
     public function scopeFilterBySiswa($query)
     {
         if ($search = request('search')) {

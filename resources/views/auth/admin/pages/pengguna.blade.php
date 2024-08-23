@@ -14,9 +14,9 @@
         <div class="flex justify-between mb-4 items-center flex-wrap gap-2">
             <h1 class="font-semibold text-xl">Daftar Pengguna</h1>
             <div class="flex gap-2">
-                <a class="items-center gap-2 flex bg-[#083f5a] p-2 rounded-md fill-white text-white"
+                <Link class="items-center gap-2 flex bg-[#083f5a] p-2 rounded-md fill-white text-white"
                     href="{{ route('admin.pengguna.export') }}"><box-icon name='download'></box-icon> Export
-                    User Data</a>
+                    User Data</Link>
             </div>
         </div>
         <div class="rounded-md overflow-auto bg-slate-300">
@@ -47,12 +47,12 @@
                                 <Link href="{{ route('admin.pengguna.edit', $pengguna->id) }}" class="bg-[#788d00] text-white py-1 px-3 rounded-sm">
                                 Edit
                                 </Link>
-                                <form action="{{ route('admin.pengguna.destroy', $pengguna->id) }}" method="POST">
+                                <x-splade-form action="{{ route('admin.pengguna.destroy', $pengguna->id) }}" method="DELETE" confirm="Hapus Data" confirm-text="Apakah kamu yakin akan menghapusnya?" confirm-button="Ya, aku ingin menghapusnya!" cancel-button="Tidak">
                                     @csrf
                                     <button type="submit" class="bg-[#8d0500] text-white py-1 px-3 rounded-sm">
                                         Hapus
                                     </button>
-                                </form>
+                                </x-splade-form>
                             </td>
                         </tr>
                     @endforeach

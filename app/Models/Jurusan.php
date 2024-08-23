@@ -12,11 +12,11 @@ class Jurusan extends Model
 
     public function kepalaJurusan()
     {
-        return $this->belongsTo(KepalaJurusan::class);
+        return $this->belongsTo(KepalaJurusan::class, 'kepala_jurusan_id', 'id');
     }
 
     public function kelas()
     {
-        return $this->hasMany(Kelas::class);
+        return $this->hasMany(Kelas::class, 'jurusan_id', 'id');
     }
 }

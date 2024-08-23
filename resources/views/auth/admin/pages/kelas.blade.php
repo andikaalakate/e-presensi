@@ -14,9 +14,9 @@
         <div class="flex justify-between mb-4 items-center flex-wrap gap-2">
             <h1 class="font-semibold text-xl">Daftar Kelas</h1>
             <div class="flex gap-2">
-                <a class="items-center gap-2 flex bg-[#083f5a] p-2 rounded-md fill-white text-white"
+                <Link class="items-center gap-2 flex bg-[#083f5a] p-2 rounded-md fill-white text-white"
                     href="{{ route('admin.kelas') }}"><box-icon name='download'></box-icon> Export
-                    Kelas Data</a>
+                    Kelas Data</Link>
             </div>
         </div>
         <div class="rounded-md overflow-auto bg-slate-300">
@@ -25,11 +25,34 @@
                     <tr>
                         <th class="p-2">No</th>
                         <th class="p-2">Nama Kelas</th>
+                        <th class="p-2">Jumlah Siswa</th>
+                        <th class="p-2">Wali Kelas</th>
                         <th class="p-2">Jurusan</th>
                         <th class="p-2">Aksi</th>
                     </tr>
                 </thead>
-                {{-- <x-items-h-table /> --}}
+                <tbody>
+                    @if ($kelas->count())
+                        @foreach ($kelas as $index => $kel)
+                            @php
+                                $fields = [
+                                    ['data' => $index + 1],
+                                    ['data' => $kel->nama_kelas],
+                                    ['data' => $kel->siswa->count()],
+                                    ['data' => $kel->waliKelas->user->nama],
+                                    ['data' => $kel->jurusan->nama_jurusan],
+                                ];
+                                $actions = [
+                                    'edit' => ['url' => route('admin.kelas.edit', $kel->id), 'label' => 'Edit'],
+                                    'delete' => ['url' => route('admin.kelas.destroy', $kel->id), 'label' => 'Hapus'],
+                                ];
+                            @endphp
+                            <x-items-h-table :fields="$fields" :actions="$actions" />
+                        @endforeach
+                    @else
+                        <p class="text-center p-8">Tidak ada hasil yang ditemukan.</p>
+                    @endif
+                </tbody>
             </table>
         </div>
     </div>
@@ -37,4 +60,3 @@
         <x-pagination-items :paginator="$kelas" route="{{ route('admin.kelas') }}" />
     </div>
 </x-layouts.admin>
-
