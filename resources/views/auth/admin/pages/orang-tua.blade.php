@@ -1,3 +1,6 @@
-<div>
-    <!-- People find pleasure in different ways. I find it in keeping my mind clear. - Marcus Aurelius -->
-</div>
+<x-layouts.admin>
+    @seoTitle('Admin - Orang Tua')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
+</x-layouts.admin>

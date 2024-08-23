@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Models\Presensi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,15 +15,22 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        $presensis = Presensi::with('siswa.kelas.jurusan', 'siswa.kelas.tahunAjaran')->get();
+        $presensis = Presensi::with('siswa.kelas.jurusan', 'siswa.kelas.tahunAjaran')
+        ->whereDate('created_at', Carbon::today())
+        ->get();
 
         $status = $presensis->where('nisn', Auth::user()->nisn)->first();
 
         if (!$status) {
             $statusAbsensi = "Masuk";
         } else {
-            $statusAbsensi = "Pulang";
+            if ($status->jam_masuk && !$status->jam_pulang) {
+                $statusAbsensi = "Pulang";
+            } else {
+                $statusAbsensi = "Masuk";
+            }
         }
+        
         return view('auth.siswa.pages.presensi', [
             'title' => 'Presensi',
             'status' => $statusAbsensi

@@ -1,81 +1,45 @@
-    <nav @click.outside="data.isOpen = false" class="py-2 px-4 flex items-center justify-between">
-        <div @click.stop="data.isOpen = !data.isOpen"
-            class="size-[50px] bg-[#005A8D] flex items-center justify-center rounded-lg cursor-pointer">
-            <box-icon name='menu' class="fill-white size-8"></box-icon>
-        </div>
+<nav @click.outside="navigation.isOpen = false, profile.isOpen = false"
+    class="py-2 px-4 flex items-center justify-between">
+    <div @click.stop="navigation.isOpen = !navigation.isOpen"
+        class="size-[50px] bg-[#005A8D] flex items-center justify-center rounded-lg cursor-pointer">
+        <x-splade-state>
+            <!-- Kondisi untuk menampilkan icon -->
+            <template v-if="navigation.isOpen">
+                <box-icon name='x' class="fill-white size-8"></box-icon>
+            </template>
+            <template v-else>
+                <box-icon name='menu' class="fill-white size-8"></box-icon>
+            </template>
+        </x-splade-state>
+    </div>
+    <div class="flex gap-4 items-center" @click.outside="profile.isOpen = false">
         <h1 class="text-2xl font-[Oswald] text-gray-600 uppercase">e-Presensi</h1>
-    </nav>
-
-    {{-- Aside --}}
-    <aside v-bind:class="{'left-[15px] max-[768px]:left-[10px]': data.isOpen, '-left-full': ! data.isOpen }"
-        class="fixed z-10 w-80 h-[calc(100vh-84px)] bg-[#005A8D] rounded-lg bottom-[15px] font-[Oswald] duration-500 ease-in-out text-white py-8 uppercase max-[768px]:h-[calc(100vh-74px)] max-[768px]:bottom-[10px] max-[768px]:w-[calc(100%-20px)]">
-        @if (auth()->guard('admin')->check())
-            <Link href="{{ route('admin.dashboard') }}" class="fill-white flex items-center gap-2 p-2 text-3xl">
-            <box-icon name='dashboard' type='solid'></box-icon>Dashboard
-            </Link>
-        @elseif (auth()->guard('siswa')->check())
-            <Link href="{{ route('siswa.dashboard') }}" class="fill-white flex items-center gap-2 p-2 text-3xl">
-            <box-icon name='dashboard' type='solid'></box-icon>Dashboard
-            </Link>
-        @endif
-        <ul class="h-[calc(100%-86px)]">
-            @auth('admin')
-                <li>
-                    <Link href="{{ route('admin.siswa') }}"
-                        class="{{ request()->is('admin/siswa*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                    <box-icon name='group' type='solid'></box-icon>Siswa</Link>
-                </li>
-                @if (auth()->user()->hasRole('admin|superadmin|kepala_sekolah'))
-                    <li>
-                        <Link href="{{ route('admin.jurusan') }}"
-                            class="{{ request()->is('admin/jurusan*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                        <box-icon name='category' type='solid'></box-icon>Jurusan</Link>
-                    </li>
-                    <li>
-                        <Link href="{{ route('admin.kelas') }}"
-                            class="{{ request()->is('admin/kelas*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                        <box-icon name='chalkboard' type='solid'></box-icon>Kelas</Link>
-                    </li>
-                    <li>
-                        <Link href="{{ route('admin.tahun-ajaran') }}"
-                            class="{{ request()->is('admin/tahun-ajaran*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                        <box-icon name='calendar' type='solid'></box-icon>Tahun Ajaran</Link>
-                    </li>
-                    <li>
-                        <Link href="{{ route('admin.pengguna') }}"
-                            class="{{ request()->is('admin/pengguna*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                        <box-icon type='solid' name='user-rectangle'></box-icon>Pengguna</Link>
-                    </li>
-                    <li>
-                        <Link href="{{ route('admin.laporan') }}"
-                            class="{{ request()->is('admin/laporan*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                        <box-icon name='stats'></box-icon>Laporan</Link>
-                    </li>
-                @endif
-            @endauth
-
-            <li>
-                <Link href="{{ auth()->guard('admin')->check() ? route('admin.presensi') : route('siswa.presensi') }}"
-                    class="{{ request()->is(auth()->guard('admin')->check() ? 'admin/presensi*' : 'siswa/presensi*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                <box-icon name='calendar-check' type='solid'></box-icon>Presensi</Link>
-            </li>
-            <li>
-                <Link
-                    href="{{ auth()->guard('admin')->check() ? route('admin.peringkat') : route('siswa.peringkat') }}"
-                    class="{{ request()->is(auth()->guard('admin')->check() ? 'admin/peringkat*' : 'siswa/peringkat*') ? 'bg-[#083f5a]' : '' }} gap-2 p-2 text-2xl fill-white flex items-center">
-                <box-icon name='trophy' type='solid'></box-icon>Peringkat</Link>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <form action="{{ auth()->guard('admin')->check() ? route('admin.logout') : route('siswa.logout') }}"
-                    method="post">
+        <div class="relative">
+            <img src="{{ asset('assets/logo-gadak-std.png') }}" alt="Profil"
+                class="cursor-pointer flex size-12 rounded-full border-2 border-slate-300 shadow-lg"
+                @click.stop="profile.isOpen = !profile.isOpen">
+            <div :class="{ 'opacity-100': profile.isOpen, 'opacity-0': !profile.isOpen }"
+                class="bg-slate-400 absolute flex flex-col right-0 rounded-lg overflow-hidden gap-[1px] border border-slate-400 shadow-lg z-10">
+                <Link href="{{ route('admin.profil') }}" class="px-4 py-2 flex bg-slate-300 items-center gap-1 text-gray-600 fill-gray-800"><box-icon name='user-circle' type='solid'></box-icon>Profil</Link>
+                <x-splade-form action="{{ route('admin.logout') }}" method="post" confirm="Keluar?"
+                    confirm-text="Apa kamu yakin?" confirm-button="Ya, aku ingin keluar dari akunku!"
+                    cancel-button="Tidak">
                     @method('POST')
                     @csrf
-                    <button class="gap-2 p-2 text-2xl fill-white flex items-center">
-                        <box-icon name='exit' type='solid'></box-icon>Keluar
+                    <button type="submit"
+                        class="px-4 py-2 flex bg-slate-300 items-center gap-1 text-gray-600 fill-gray-800">
+                        <box-icon box-icon name='exit' type='solid'></box-icon>
+                        Keluar
                     </button>
-                </form>
-            </li>
-        </ul>
-    </aside>
+                </x-splade-form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{{-- Aside --}}
+@if (auth()->guard('admin')->check())
+    <x-admin-sidebar />
+@elseif (auth()->guard('siswa')->check())
+    <x-siswa-sidebar />
+@endif

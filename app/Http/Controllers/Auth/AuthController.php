@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use ProtoneMedia\Splade\Facades\Toast;
 
 class AuthController extends Controller
 {
@@ -26,9 +27,19 @@ class AuthController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
+            Toast::title('Sukses!')
+                ->success()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Kamu berhasil masuk!');
             return redirect()->intended('admin/');
         } else {
-            return redirect()->intended('admin/login')->with('warning', 'Email / Password Salah!');
+            Toast::title('Gagal!')
+                ->warning()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Email / Password Salah!');
+            return redirect()->intended('admin/login');
         }
     }
 
@@ -41,6 +52,11 @@ class AuthController extends Controller
             Auth::guard('admin')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
+            Toast::title('Sukses!')
+                ->success()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Kamu berhasil keluar!');
         }
 
         return redirect()->intended('admin/login');
@@ -63,9 +79,19 @@ class AuthController extends Controller
 
         if (Auth::guard('siswa')->attempt($credentials)) {
             $request->session()->regenerate();
+            Toast::title('Sukses!')
+                ->success()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Kamu berhasil masuk!');
             return redirect()->intended('siswa/');
         } else {
-            return redirect()->intended('siswa/login')->with('warning', 'NISN / Password Salah!');
+            Toast::title('Gagal!')
+                ->warning()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('NISN / Password Salah!');
+            return redirect()->intended('siswa/login');
         }
     }
 
@@ -78,6 +104,11 @@ class AuthController extends Controller
             Auth::guard('siswa')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
+            Toast::title('Sukses!')
+                ->success()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message('Kamu berhasil keluar!');
         }
 
         return redirect()->intended('siswa/login');

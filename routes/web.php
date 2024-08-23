@@ -14,10 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+Route::get('offline', function () {
+    return view('offline-page');
+});
+
 Route::middleware(['splade'])->group(function () {
     Route::get('/', function () {
-        return Auth::guard('admin')->check() ? redirect('/admin') : redirect('/siswa');
+        return view("welcome");
     });
+
+    Route::get('/unauthorization', fn () => view('auth.errors.unauthorized'))->name('unauthorized');
 
     // Registers routes to support the interactive components...
     Route::spladeWithVueBridge();

@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Auth\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Jurusan;
+use App\Models\Presensi;
 use App\Models\WaliKelas;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -13,9 +19,21 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('auth.admin.pages.dashboard', [
-            'title' => 'Dashboard',
-        ]);
+        $countData = [
+            'siswa' => Siswa::count(),
+            'waliKelas' => WaliKelas::count(),
+            'pengguna' => User::count(),
+            'kelas' => Kelas::count(),
+            'jurusan' => Jurusan::count(),
+            'presensiHadir' => Presensi::where('status', 'Hadir')->count(),
+            'presensiAbsen' => Presensi::where('status', 'Alpha')->count(),
+            'presensiTerlambat' => Presensi::where('status', 'Terlambat')->count(),
+            'presensiSakit' => Presensi::where('status', 'Sakit')->count(),
+            'presensiIzin' => Presensi::where('status', 'Izin')->count(),
+            'tahunAjaran' => TahunAjaran::count(),
+        ];
+        
+        return view('auth.admin.pages.dashboard', array_merge(['title' => 'Dashboard'], $countData));
     }
 
     /**
