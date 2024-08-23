@@ -33,8 +33,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->renderable(\ProtoneMedia\Splade\SpladeCore::exceptionHandler($exceptions->handler));
         $exceptions->renderable(function (UnauthorizedException $e) {
-            return response()->view('auth.errors.unauthorized', [
-                'exception' => "Kamu tidak memiliki izin untuk dapat mengakses halaman ini.",
-            ], 403);
+            return redirect()->route('unauthorized');
         });
     })->create();

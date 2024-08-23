@@ -20,7 +20,7 @@
 </head>
 
 <body class="{{ request()->routeIs('admin.login', 'login') ? 'bg-[#1d1d1d]' : 'bg-[#fff7fc]' }}
-font-[Poppins]">
+font-[Poppins] overflow-hidden" >
     @splade()
 </body>
 

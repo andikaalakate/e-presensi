@@ -58,16 +58,4 @@
             <box-icon name='info-circle' type='solid'></box-icon>Tentang</Link>
         </li>
     </ul>
-    <ul>
-        <li>
-            <x-splade-form action="{{ route('admin.logout') }}" method="post" confirm="Keluar?"
-                confirm-text="Apa kamu yakin?" confirm-button="Ya, aku ingin keluar dari akunku!" cancel-button="Tidak">
-                @method('POST')
-                @csrf
-                <button type="submit" class="gap-2 p-2 text-2xl fill-white flex items-center  w-full">
-                    <box-icon name='exit' type='solid'></box-icon>KELUAR
-                </button>
-            </x-splade-form>
-        </li>
-    </ul>
 </aside>
