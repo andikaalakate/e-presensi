@@ -14,9 +14,11 @@
                     <td class="p-2">:</td>
                     <td class="p-2 flex justify-start gap-4">
                         <Link href="{{ $actions['edit']['url'] }}" class="bg-[#788d00] text-white py-1 px-3 rounded-sm">
-                            {{ $actions['edit']['label'] }}
+                        {{ $actions['edit']['label'] }}
                         </Link>
-                        <x-splade-form action="{{ $actions['delete']['url'] }}" method="DELETE">
+                        <x-splade-form action="{{ $actions['delete']['url'] }}" method="DELETE"
+                            confirm="Hapus Data Siswa" confirm-text="Apakah kamu yakin akan menghapusnya?"
+                            confirm-button="Ya, aku ingin menghapusnya!" cancel-button="Tidak">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-[#8d0500] text-white py-1 px-3 rounded-sm">
