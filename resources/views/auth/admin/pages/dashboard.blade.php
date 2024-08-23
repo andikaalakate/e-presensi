@@ -5,7 +5,70 @@
     </x-slot:title>
 
     <div class="flex rounded-sm gap-4 flex-wrap">
-        {{-- @if (auth()->user()->hasRole('superadmin')) --}}
+        @if (auth()->user()->hasRole('admin|kepala_sekolah|kepala_jurusan'))
+            <Link href="{{ route('admin.jurusan') }}"
+                class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
+            <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
+                <p class="text-white text-4xl">{{ isset($jurusan) ? $jurusan : 0 }}</p>
+                <p class="text-white text-sm">Jurusan</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
+                style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
+                class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
+                <path
+                    d="M4 11h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm10 0h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zM4 21h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm13 0c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4z">
+                </path>
+            </svg>
+            </Link>
+
+            <Link href="{{ route('admin.kelas') }}"
+                class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
+            <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
+                <p class="text-white text-4xl">{{ isset($kelas) ? $kelas : 0 }}</p>
+                <p class="text-white text-sm">Kelas</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
+                style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
+                class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
+                <path
+                    d="M20 4H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h4l-1.8 2.4 1.6 1.2 2.7-3.6h3l2.7 3.6 1.6-1.2L16 18h4c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zM5 13h4v2H5v-2z">
+                </path>
+            </svg>
+            </Link>
+
+            <Link href="{{ route('admin.tahun-ajaran') }}"
+                class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
+            <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
+                <p class="text-white text-4xl">{{ isset($tahunAjaran) ? $tahunAjaran : 0 }}</p>
+                <p class="text-white text-sm">Tahun Ajaran</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
+                style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
+                class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
+                <path
+                    d="M21 20V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2zM9 18H7v-2h2v2zm0-4H7v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm2-5H5V7h14v2z">
+                </path>
+            </svg>
+            </Link>
+        @endif
+    </div>
+    <div class="flex gap-4 mt-4 flex-wrap">
+        @if (auth()->user()->hasRole('superadmin'))
+            <Link href="{{ route('admin.pengguna') }}"
+                class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
+            <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
+                <p class="text-white text-4xl">{{ isset($pengguna) ? $pengguna : 0 }}</p>
+                <p class="text-white text-sm">Pengguna</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
+                style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
+                class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
+                <path
+                    d="M6 22h13a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h1zm6-17.001c1.647 0 3 1.351 3 3C15 9.647 13.647 11 12 11S9 9.647 9 7.999c0-1.649 1.353-3 3-3zM6 17.25c0-2.219 2.705-4.5 6-4.5s6 2.281 6 4.5V18H6v-.75z">
+                </path>
+            </svg>
+            </Link>
+        @endif
         <Link href="{{ route('admin.siswa') }}"
             class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
         <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
@@ -20,67 +83,6 @@
             </path>
             <path
                 d="M9.5 12c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4zm0-6c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2zm1.5 7H8c-3.309 0-6 2.691-6 6v1h2v-1c0-2.206 1.794-4 4-4h3c2.206 0 4 1.794 4 4v1h2v-1c0-3.309-2.691-6-6-6z">
-            </path>
-        </svg>
-        </Link>
-        {{-- @endif --}}
-        {{-- @if (auth()->user()->hasRole('admin')) --}}
-        <Link href="{{ route('admin.jurusan') }}"
-            class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
-        <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
-            <p class="text-white text-4xl">{{ isset($jurusan) ? $jurusan : 0 }}</p>
-            <p class="text-white text-sm">Jurusan</p>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
-            style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
-            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
-            <path
-                d="M4 11h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm10 0h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zM4 21h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm13 0c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4z">
-            </path>
-        </svg>
-        </Link>
-        {{-- @endif --}}
-        <Link href="{{ route('admin.kelas') }}"
-            class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
-        <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
-            <p class="text-white text-4xl">{{ isset($kelas) ? $kelas : 0 }}</p>
-            <p class="text-white text-sm">Kelas</p>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
-            style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
-            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
-            <path
-                d="M20 4H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h4l-1.8 2.4 1.6 1.2 2.7-3.6h3l2.7 3.6 1.6-1.2L16 18h4c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zM5 13h4v2H5v-2z">
-            </path>
-        </svg>
-        </Link>
-        <Link href="{{ route('admin.tahun-ajaran') }}"
-            class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
-        <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
-            <p class="text-white text-4xl">{{ isset($tahunAjaran) ? $tahunAjaran : 0 }}</p>
-            <p class="text-white text-sm">Tahun Ajaran</p>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
-            style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
-            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
-            <path
-                d="M21 20V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2zM9 18H7v-2h2v2zm0-4H7v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm2-5H5V7h14v2z">
-            </path>
-        </svg>
-        </Link>
-    </div>
-    <div class="flex gap-4 mt-4 flex-wrap">
-        <Link href="{{ route('admin.pengguna') }}"
-            class="min-w-52 group rounded-lg flex-grow h-40 bg-[#005A8D] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]">
-        <div class="absolute left-[10%] top-[50%] translate-y-[-50%]">
-            <p class="text-white text-4xl">{{ isset($pengguna) ? $pengguna : 0 }}</p>
-            <p class="text-white text-sm">Pengguna</p>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
-            style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; enable-background:new 0 0 512 512"
-            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
-            <path
-                d="M6 22h13a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h1zm6-17.001c1.647 0 3 1.351 3 3C15 9.647 13.647 11 12 11S9 9.647 9 7.999c0-1.649 1.353-3 3-3zM6 17.25c0-2.219 2.705-4.5 6-4.5s6 2.281 6 4.5V18H6v-.75z">
             </path>
         </svg>
         </Link>
