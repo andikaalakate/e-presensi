@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :breadcrumbs="$breadcrumbs">
     @seoTitle('Admin - Kelas')
     <x-slot:title>
         {{ isset($title) ? $title : '' }}
@@ -16,7 +16,7 @@
             <div class="flex gap-2">
                 <Link class="items-center gap-2 flex bg-[#083f5a] p-2 rounded-md fill-white text-white"
                     href="{{ route('admin.kelas') }}"><box-icon name='download'></box-icon> Export
-                    Kelas Data</Link>
+                Kelas Data</Link>
             </div>
         </div>
         <div class="rounded-md overflow-auto bg-slate-300">
@@ -32,31 +32,50 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($kelas->count())
-                        @foreach ($kelas as $index => $kel)
-                            @php
-                                $fields = [
-                                    ['data' => $index + 1],
-                                    ['data' => $kel->nama_kelas],
-                                    ['data' => $kel->siswa->count()],
-                                    ['data' => $kel->waliKelas->user->nama],
-                                    ['data' => $kel->jurusan->nama_jurusan],
-                                ];
-                                $actions = [
-                                    'edit' => ['url' => route('admin.kelas.edit', $kel->id), 'label' => 'Edit'],
-                                    'delete' => ['url' => route('admin.kelas.destroy', $kel->id), 'label' => 'Hapus'],
-                                ];
-                            @endphp
-                            <x-items-h-table :fields="$fields" :actions="$actions" />
-                        @endforeach
-                    @else
-                        <p class="text-center p-8">Tidak ada hasil yang ditemukan.</p>
-                    @endif
+                    <x-splade-lazy>
+                        <x-slot:placeholder>
+                            <tr>
+                                <td class="text-center p-8" colspan="6">
+                                    Sedang memuat list Kelas...
+                                </td>
+                            </tr>
+                        </x-slot:placeholder>
+                        @if ($kelas->count())
+                            @foreach ($kelas as $index => $kel)
+                                @php
+                                    $fields = [
+                                        ['data' => $index + 1],
+                                        ['data' => $kel->nama_kelas],
+                                        ['data' => $kel->siswa->count()],
+                                        ['data' => $kel->waliKelas->user->nama],
+                                        ['data' => $kel->jurusan->nama_jurusan],
+                                    ];
+                                    $actions = [
+                                        'edit' => ['url' => route('admin.kelas.edit', $kel->id), 'label' => 'Edit'],
+                                        'delete' => [
+                                            'url' => route('admin.kelas.destroy', $kel->id),
+                                            'label' => 'Hapus',
+                                        ],
+                                    ];
+                                @endphp
+                                <x-items-h-table :fields="$fields" :actions="$actions" />
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="text-center p-8" colspan="5">
+                                    Tidak ada hasil yang ditemukan.
+                                </td>
+                            </tr>
+                        @endif
+                    </x-splade-lazy>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
-        <x-pagination-items :paginator="$kelas" route="{{ route('admin.kelas') }}" />
-    </div>
+
+    @if ($kelas->hasPages())
+        <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
+            <x-pagination-items :paginator="$kelas" route="{{ route('admin.kelas') }}" />
+        </div>
+    @endif
 </x-layouts.admin>

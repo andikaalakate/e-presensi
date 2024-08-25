@@ -30,44 +30,63 @@
                             3 => 'bg-[#cd7f32] fill-[#663b10]',
                         ];
                     @endphp
+                    <x-splade-lazy>
+                        <x-slot:placeholder>
+                            <tr>
+                                <td class="text-center p-8" colspan="8">
+                                    Sedang memuat list Peringkat...
+                                </td>
+                            </tr>
+                        </x-slot:placeholder>
+                        @if ($peringkat->count())
+                            @foreach ($peringkat as $skor)
+                                @php
+                                    $peringkatGlobalItem = $peringkatGlobal->firstWhere('id', $skor->id);
+                                    $isMedali = $peringkatGlobalItem ? $peringkatGlobalItem->global_rank <= 3 : false;
+                                    $rankingKelas = $isMedali
+                                        ? $medaliKelas[$peringkatGlobalItem->global_rank]
+                                        : 'bg-slate-200 fill-black';
+                                @endphp
 
-                    @foreach ($peringkat as $skor)
-                        @php
-                            $peringkatGlobalItem = $peringkatGlobal->firstWhere('id', $skor->id);
-                            $isMedali = $peringkatGlobalItem ? $peringkatGlobalItem->global_rank <= 3 : false;
-                            $rankingKelas = $isMedali
-                                ? $medaliKelas[$peringkatGlobalItem->global_rank]
-                                : 'bg-slate-200 fill-black';
-                        @endphp
-
-                        <tr class="even:bg-slate-400 font-medium border-b border-slate-400">
-                            <td class="p-2 text-center">{{ $skor->siswa->nisn }}</td>
-                            <td class="p-2 flex flex-col">
-                                <p class="text-xl">{{ $skor->siswa->nama_lengkap }}</p>
-                                <small class="text-xs opacity-75">
-                                    {{ $skor->presensi->where('status', 'Hadir')->count() + $skor->presensi->where('status', 'Terlambat')->count() }}
-                                    Hadir,
-                                    {{ $skor->presensi->where('status', 'Sakit')->count() }} Sakit,
-                                    {{ $skor->presensi->where('status', 'Izin')->count() }} Izin,
-                                    {{ $skor->presensi->where('status', 'Alpha')->count() }} Absen
-                                </small>
-                            </td>
-                            <td class="p-2 text-center">{{ $skor->skor }}</td>
-                            <td class="p-2 text-center">{{ $skor->siswa->kelas->nama_kelas }}</td>
-                            <td class="p-2 text-center {{ $rankingKelas }}">
-                                @if ($isMedali)
-                                    <box-icon class="size-8" type='solid' name='medal'></box-icon>
-                                @else
-                                    #{{ $peringkatGlobalItem->global_rank ?? '' }}
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
+                                <tr class="even:bg-slate-400 font-medium border-b border-slate-400">
+                                    <td class="p-2 text-center">{{ $skor->siswa->nisn }}</td>
+                                    <td class="p-2 flex flex-col">
+                                        <p class="text-xl">{{ $skor->siswa->nama_lengkap }}</p>
+                                        <small class="text-xs opacity-75">
+                                            {{ $skor->presensi->where('status', 'Hadir')->count() + $skor->presensi->where('status', 'Terlambat')->count() }}
+                                            Hadir,
+                                            {{ $skor->presensi->where('status', 'Sakit')->count() }} Sakit,
+                                            {{ $skor->presensi->where('status', 'Izin')->count() }} Izin,
+                                            {{ $skor->presensi->where('status', 'Alpha')->count() }} Absen
+                                        </small>
+                                    </td>
+                                    <td class="p-2 text-center">{{ $skor->skor }}</td>
+                                    <td class="p-2 text-center">{{ $skor->siswa->kelas->nama_kelas }}</td>
+                                    <td class="p-2 text-center {{ $rankingKelas }}">
+                                        @if ($isMedali)
+                                            <box-icon class="size-8" type='solid' name='medal'></box-icon>
+                                        @else
+                                            #{{ $peringkatGlobalItem->global_rank ?? '' }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="text-center p-8" colspan="5">
+                                    Tidak ada peringkat yang ditemukan.
+                                </td>
+                            </tr>
+                        @endif
+                    </x-splade-lazy>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
-        <x-pagination-items :paginator="$peringkat" route="{{ route('admin.peringkat') }}" />
-    </div>
+
+    @if ($peringkat->hasPages())
+        <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
+            <x-pagination-items :paginator="$peringkat" route="{{ route('admin.peringkat') }}" />
+        </div>
+    @endif
 </x-layouts.admin>

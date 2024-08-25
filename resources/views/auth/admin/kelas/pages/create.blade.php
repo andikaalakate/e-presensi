@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :breadcrumbs="$breadcrumbs">
     @seoTitle('Admin - Tambah Kelas')
     <x-slot:title>
         {{ isset($title) ? $title : '' }}

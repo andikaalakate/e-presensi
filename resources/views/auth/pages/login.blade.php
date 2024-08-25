@@ -1,4 +1,4 @@
-<div class=" bg-[#1d1d1d]">
+<div class="bg-[#1d1d1d]">
     <div class="fixed right-0 w-[520px] h-screen bg-slate-200 max-[524px]:w-full py-24 z-10">
         <h1 class="text-3xl font-[Poppins] text-center font-semibold ">Masuk</h1>
         <x-splade-form action="{{ route('admin.proses-login') }}" method="post" class="p-4 py-12 flex flex-col gap-8">

@@ -1,4 +1,4 @@
-<x-layouts.admin>
+<x-layouts.admin :breadcrumbs="$breadcrumbs">
     @seoTitle('Admin - Jurusan')
     <x-slot:title>
         {{ isset($title) ? $title : '' }}
@@ -31,37 +31,52 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($jurusans->count())
-                        @foreach ($jurusans as $index => $jur)
-                            @php
-                                $totalSiswa = 0;
-                                foreach ($jur->kelas as $kelas) {
-                                    $totalSiswa += $kelas->siswa()->count();
-                                }
+                    <x-splade-lazy>
+                        <x-slot:placeholder>
+                            <tr>
+                                <td class="text-center p-8" colspan="7">
+                                    Sedang memuat list Jurusan...
+                                </td>
+                            </tr>
+                        </x-slot:placeholder>
+                        @if ($jurusans->count())
+                            @foreach ($jurusans as $index => $jur)
+                                @php
+                                    $totalSiswa = 0;
+                                    foreach ($jur->kelas as $kelas) {
+                                        $totalSiswa += $kelas->siswa()->count();
+                                    }
 
-                                $fields = [
-                                    ['data' => $index + 1],
-                                    ['data' => $jur->nama_jurusan],
-                                    ['data' => $jur->singkatan_jurusan],
-                                    ['data' => $jur->kepalaJurusan->user->nama],
-                                    ['data' => $jur->kelas->count()],
-                                    ['data' => $totalSiswa],
-                                ];
-                                $actions = [
-                                    'edit' => ['url' => route('admin.jurusan.edit', $jur->id), 'label' => 'Edit'],
-                                    'delete' => ['url' => route('admin.jurusan.destroy', $jur->id), 'label' => 'Hapus'],
-                                ];
-                            @endphp
-                            <x-items-h-table :fields="$fields" :actions="$actions" />
-                        @endforeach
-                    @else
-                        <p class="text-center p-8">Tidak ada hasil yang ditemukan.</p>
-                    @endif
+                                    $fields = [
+                                        ['data' => $index + 1],
+                                        ['data' => $jur->nama_jurusan],
+                                        ['data' => $jur->singkatan_jurusan],
+                                        ['data' => $jur->kepalaJurusan->user->nama],
+                                        ['data' => $jur->kelas->count()],
+                                        ['data' => $totalSiswa],
+                                    ];
+                                    $actions = [
+                                        'edit' => ['url' => route('admin.jurusan.edit', $jur->id), 'label' => 'Edit'],
+                                        'delete' => [
+                                            'url' => route('admin.jurusan.destroy', $jur->id),
+                                            'label' => 'Hapus',
+                                        ],
+                                    ];
+                                @endphp
+                                <x-items-h-table :fields="$fields" :actions="$actions" />
+                            @endforeach
+                        @else
+                            <p class="text-center p-8">Tidak ada hasil yang ditemukan.</p>
+                        @endif
+                    </x-splade-lazy>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
-        <x-pagination-items :paginator="$jurusans" route="{{ route('admin.jurusan') }}" />
-    </div>
+
+    @if ($jurusans->hasPages())
+        <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
+            <x-pagination-items :paginator="$jurusans" route="{{ route('admin.jurusan') }}" />
+        </div>
+    @endif
 </x-layouts.admin>
