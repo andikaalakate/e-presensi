@@ -15,7 +15,12 @@ export default {
     ],
 
     theme: {
-        extend: {},
+        extend: {
+            fontFamily : {
+                'poppins': ['Poppins'],
+                'oswald': ['Oswald'],
+            }
+        },
     },
     plugins: [forms, typography, require('tailwind-scrollbar')],
 };
