@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 
 class TahunAjaranController extends Controller
@@ -12,8 +13,12 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
+        $query = TahunAjaran::with('kelas')->latest();
+        $tahunAjarans = $query->paginate(5);
+
         return view('auth.admin.pages.tahun-ajaran', [
             'title' => 'Tahun Ajaran',
+            'tahunAjarans' => $tahunAjarans
         ]);
     }
 
@@ -22,7 +27,7 @@ class TahunAjaranController extends Controller
      */
     public function create()
     {
-        return view('auth.admin.tahun-ajaran.create', [
+        return view('auth.admin.tahun-ajaran.pages.create', [
             'title' => 'Tambah Tahun Ajaran',
         ]);
     }
@@ -40,7 +45,7 @@ class TahunAjaranController extends Controller
      */
     public function show(string $id)
     {
-        return view('auth.admin.tahun-ajaran.show', [
+        return view('auth.admin.tahun-ajaran.pages.show', [
             'title' => 'Lihat Tahun Ajaran',
         ]);
     }
@@ -50,7 +55,7 @@ class TahunAjaranController extends Controller
      */
     public function edit(string $id)
     {
-        return view('auth.admin.tahun-ajaran.edit', [
+        return view('auth.admin.tahun-ajaran.pages.edit', [
             'title' => 'Edit Tahun Ajaran',
         ]);
     }

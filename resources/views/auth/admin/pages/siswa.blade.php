@@ -1,9 +1,10 @@
-<x-layouts.admin>
+<x-layouts.admin :breadcrumbs="$breadcrumbs">
     @seoTitle('Admin - Siswa')
+
     <x-slot:title>
         {{ isset($title) ? $title : '' }}
     </x-slot:title>
-    
+
     <div class="bg-slate-200 p-2 md:p-4 rounded-md">
         <div class="flex items-center justify-between gap-2">
             <x-search-form route="{{ route('admin.siswa') }}" value="{{ request('search') }}" placeholder="Cari..." />
@@ -13,11 +14,13 @@
         </div>
     </div>
     <x-splade-lazy>
-        <div>
-            <x-slot:placeholder class="text-center items-center text-xl font-bold flex w-full">
-                Sedang memuat list Siswa...
-            </x-slot:placeholder>
-        </div>
+        <x-slot:placeholder>
+            <div class="flex items-center justify-center w-full">
+                <p class="p-8 text-center">
+                    Sedang memuat list Siswa...
+                </p>
+            </div>
+        </x-slot:placeholder>
         @if ($siswas->count())
             @foreach ($siswas as $siswa)
                 @php
@@ -40,7 +43,9 @@
         @endif
     </x-splade-lazy>
 
-    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
-        <x-pagination-items :paginator="$siswas" route="{{ route('admin.siswa') }}" />
-    </div>
+    @if ($siswas->hasPages())
+        <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
+            <x-pagination-items :paginator="$siswas" route="{{ route('admin.siswa') }}" />
+        </div>
+    @endif
 </x-layouts.admin>

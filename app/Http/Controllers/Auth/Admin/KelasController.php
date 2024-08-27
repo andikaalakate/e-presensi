@@ -16,11 +16,19 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $query = Kelas::with('jurusan', 'tahunAjaran')->latest()->filterByKelas();
+        $query = Kelas::with('jurusan', 'tahunAjaran', 'waliKelas')->latest()->filterByKelas();
         $kelas = $query->paginate(5)->withQueryString();
 
+        $title = 'Kelas';
+        
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.pages.kelas', [
-            'title' => 'Kelas',
+            'title' => $title,
+            'breadcrumbs' => $breadcrumbs,
             'kelas' => $kelas
         ]);
     }
@@ -30,8 +38,17 @@ class KelasController extends Controller
      */
     public function create()
     {
+        $title = 'Tambah Kelas';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Kelas', 'url' => route('admin.kelas')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.kelas.pages.create', [
-            'title' => 'Tambah Kelas',
+            'title' => $title,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
@@ -88,8 +105,16 @@ class KelasController extends Controller
     {
         $kelas = Kelas::with('jurusan', 'tahunAjaran')->find($id);
 
+        $title = 'Detail Kelas';
+        
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Kelas', 'url' => route('admin.kelas')],
+            ['label' => $title, 'url' => ''],
+        ];
         return view('auth.admin.kelas.pages.show', [
-            'title' => 'Detail Kelas',
+            'title' => $title,
+            'breadcrumbs' => $breadcrumbs,
             'kelas' => $kelas
         ]);
     }
@@ -101,8 +126,17 @@ class KelasController extends Controller
     {
         $kelas = Kelas::with('jurusan', 'tahunAjaran')->find($id);
 
+        $title = 'Edit Kelas';
+        
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Kelas', 'url' => route('admin.kelas')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.kelas.pages.edit', [
-            'title' => 'Edit Kelas',
+            'title' => $title,
+            'breadcrumbs' => $breadcrumbs,
             'kelas' => $kelas
         ]);
     }

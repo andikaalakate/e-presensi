@@ -1,3 +1,6 @@
-<div>
-    <!-- Do what you can, with what you have, where you are. - Theodore Roosevelt -->
-</div>
+<x-layouts.admin>
+    @seoTitle('Admin - Tambah Tahun Ajaran')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
+</x-layouts.admin>

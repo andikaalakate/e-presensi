@@ -81,6 +81,6 @@ class Presensi extends Model
 
     public function skor()
     {
-        return $this->hasMany(Skor::class);
+        return $this->belongsTo(Skor::class, 'nisn', 'nisn');
     }
 }

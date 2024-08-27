@@ -35,47 +35,71 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($presensis as $presensi)
-                        <tr class="even:bg-slate-400 font-medium border-b border-slate-400">
-                            <td class="text-center p-2 border-r border-slate-300">{{ $presensi->siswa->nisn }}</td>
-                            <td class="text-center p-2 border-r border-slate-300">{{ $presensi->siswa->nama_lengkap }}
-                            </td>
-                            <td class="text-center p-2 border-r border-slate-300">
-                                {{ $presensi->siswa->kelas->nama_kelas }}</td>
-                            <td class="text-center p-2 border-r border-slate-300">{{ $presensi->status }}</td>
-                            @php
-                                switch ($presensi->status) {
-                                    case 'Hadir':
-                                        $skor = 3;
-                                        break;
-                                    case 'Terlambat':
-                                        $skor = 2;
-                                        break;
-                                    case 'Sakit':
-                                    case 'Izin':
-                                        $skor = 1;
-                                        break;
-                                    case 'Alpha':
-                                        $skor = -1;
-                                        break;
-                                    default:
-                                        $skor = 0;
-                                }
-                            @endphp
-                            <td class="text-center p-2 border-r border-slate-300">{{ $skor }}</td>
-                            <td class="text-center p-2 border-r border-slate-300">
-                                {{ \Carbon\Carbon::parse($presensi->created_at)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}
-                            </td>
-                            <td class="text-center p-2 border-r border-slate-300">{{ $presensi->jam_masuk }}</td>
-                            <td class="text-center p-2 border-r border-slate-300">
-                                {{ isset($presensi->jam_pulang) ? $presensi->jam_pulang : 'Belum Pulang' }}</td>
-                        </tr>
-                    @endforeach
+                    <x-splade-lazy>
+                        <x-slot:placeholder>
+                            <tr>
+                                <td class="text-center p-8" colspan="8">
+                                    Sedang memuat list Presensi...
+                                </td>
+                            </tr>
+                        </x-slot:placeholder>
+                        @if ($presensis->count())
+                            @foreach ($presensis as $presensi)
+                                <tr class="even:bg-slate-400 font-medium border-b border-slate-400">
+                                    <td class="text-center p-2 border-r border-slate-300">{{ $presensi->siswa->nisn }}
+                                    </td>
+                                    <td class="text-center p-2 border-r border-slate-300">
+                                        {{ $presensi->siswa->nama_lengkap }}
+                                    </td>
+                                    <td class="text-center p-2 border-r border-slate-300">
+                                        {{ $presensi->siswa->kelas->nama_kelas }}</td>
+                                    <td class="text-center p-2 border-r border-slate-300">{{ $presensi->status }}</td>
+                                    @php
+                                        switch ($presensi->status) {
+                                            case 'Hadir':
+                                                $skor = 3;
+                                                break;
+                                            case 'Terlambat':
+                                                $skor = 2;
+                                                break;
+                                            case 'Sakit':
+                                            case 'Izin':
+                                                $skor = 1;
+                                                break;
+                                            case 'Alpha':
+                                                $skor = -1;
+                                                break;
+                                            default:
+                                                $skor = 0;
+                                        }
+                                    @endphp
+                                    <td class="text-center p-2 border-r border-slate-300">{{ $skor }}</td>
+                                    <td class="text-center p-2 border-r border-slate-300">
+                                        {{ \Carbon\Carbon::parse($presensi->created_at)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}
+                                    </td>
+                                    <td class="text-center p-2 border-r border-slate-300">{{ $presensi->jam_masuk }}
+                                    </td>
+                                    <td class="text-center p-2 border-r border-slate-300">
+                                        {{ isset($presensi->jam_pulang) ? $presensi->jam_pulang : 'Belum Pulang' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="text-center p-8" colspan="8">
+                                    Tidak ada presensi yang ditemukan.
+                                </td>
+                            </tr>
+                        @endif
+                    </x-splade-lazy>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
-        <x-pagination-items :paginator="$presensis" route="{{ route('admin.presensi') }}" />
-    </div>
+
+    @if ($presensis->hasPages())
+        <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
+            <x-pagination-items :paginator="$presensis" route="{{ route('admin.presensi') }}" />
+        </div>
+    @endif
 </x-layouts.admin>

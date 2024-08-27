@@ -27,9 +27,9 @@ const urlsToCache = [
     "/admin/login",
     "/css/app.css",
     "/css/app.js",
-    "assets/icons/icon.png",
-    "assets/icons/android-chrome-192x192.png",
-    "assets/icons/android-chrome-512x512.png",
+    "/assets/icons/icon.png",
+    "/assets/icons/android-chrome-192x192.png",
+    "/assets/icons/android-chrome-512x512.png",
 ];
 
 self.addEventListener('install', (event) => {

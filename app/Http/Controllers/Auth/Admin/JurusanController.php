@@ -15,8 +15,20 @@ class JurusanController extends Controller
      */
     public function index()
     {
+        $query = Jurusan::with('kepalaJurusan', 'kelas')->latest();
+        $jurusans = $query->paginate(5);
+
+        $title = 'Jurusan';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.pages.jurusan', [
-            'title' => 'Jurusan',
+            'title' => $title,
+            'jurusans' => $jurusans,
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 
@@ -25,8 +37,17 @@ class JurusanController extends Controller
      */
     public function create()
     {
+        $title = 'Tambah Jurusan';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Jurusan', 'url' => route('admin.jurusan')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.jurusan.pages.create', [
-            'title' => 'Tambah Jurusan',
+            'title' => $title,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
@@ -74,10 +95,19 @@ class JurusanController extends Controller
     public function show(string $id)
     {
         $jurusan = Jurusan::find($id);
+        
+        $title = 'Lihat Jurusan';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Jurusan', 'url' => route('admin.jurusan')],
+            ['label' => $title, 'url' => ''],
+        ];
 
         return view('auth.admin.jurusan.pages.show', [
-            'title' => 'Show Jurusan',
+            'title' => $title,
             'jurusan' => $jurusan,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
@@ -88,9 +118,18 @@ class JurusanController extends Controller
     {
         $jurusan = Jurusan::find($id);
 
+        $title = 'Edit Jurusan';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Jurusan', 'url' => route('admin.jurusan')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.jurusan.pages.edit', [
-            'title' => 'Edit Jurusan',
+            'title' => $title,
             'jurusan' => $jurusan,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 

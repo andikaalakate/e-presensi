@@ -1,5 +1,8 @@
 <template>
     <div class="bg-slate-200 p-2 md:p-4 rounded-md">
+        <div class="flex justify-start mb-4 items-center flex-wrap gap-2">
+            <h1 class="font-semibold text-xl">Buat Presensi</h1>
+        </div>
         <div class="flex flex-wrap gap-8">
             <div class="max-w-96 flex-grow min-w-60">
                 <img

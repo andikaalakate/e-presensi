@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Skor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PeringkatController extends Controller
 {
@@ -13,14 +14,29 @@ class PeringkatController extends Controller
      */
     public function index()
     {
-        $query = Skor::with('presensi')->filterBySiswa();
-        $peringkat = $query->paginate(5)->withQueryString();
+        $query = Skor::with('presensi', 'siswa')
+            ->filterBySiswa()
+            ->orderBy('skor', 'desc');
+
+        $peringkatGlobal = Cache::get('peringkat_global');
+
+        if (!$peringkatGlobal) {
+            $peringkatGlobal = $query->get();
+            $peringkatGlobal->each(function ($item, $index) {
+                $item->global_rank = $index + 1;
+            });
+
+            Cache::put('peringkat_global', $peringkatGlobal, now()->addMinutes(10));
+        }
+
+        $peringkat = $query->paginate(25)->withQueryString();
 
         return view('auth.admin.pages.peringkat', [
             'title' => 'Peringkat',
             'peringkat' => $peringkat
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

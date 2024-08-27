@@ -1,3 +1,6 @@
-<div>
-    <!-- Breathing in, I calm body and mind. Breathing out, I smile. - Thich Nhat Hanh -->
-</div>
+<x-layouts.admin>
+    @seoTitle('Admin - Edit Pengguna')
+    <x-slot:title>
+        {{ isset($title) ? $title : '' }}
+    </x-slot:title>
+</x-layouts.admin>

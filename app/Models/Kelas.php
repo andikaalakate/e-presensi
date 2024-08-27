@@ -16,7 +16,7 @@ class Kelas extends Model
 
     public function siswa()
     {
-        return $this->hasMany(Siswa::class);
+        return $this->hasMany(Siswa::class, 'kelas_id', 'id');
     }
 
     public function jurusan()
@@ -27,6 +27,11 @@ class Kelas extends Model
     public function tahunAjaran()
     {
         return $this->belongsTo(TahunAjaran::class);
+    }
+
+    public function waliKelas()
+    {
+        return $this->belongsTo(WaliKelas::class, 'id', 'kelas_id');
     }
 
     public function scopeFilterByKelas($query)

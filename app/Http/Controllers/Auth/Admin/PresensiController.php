@@ -21,7 +21,7 @@ class PresensiController extends Controller
     public function index()
     {
         $query = Presensi::latest();
-        $presensis = $query->paginate(10);
+        $presensis = $query->paginate(25);
 
         return view('auth.admin.pages.presensi', [
             'title' => 'Presensi',
@@ -59,8 +59,15 @@ class PresensiController extends Controller
      */
     public function create()
     {
+        $now = Carbon::now();
+
+        $presensiHariIni = Presensi::whereDate('created_at', $now->toDateString())
+            ->latest()
+            ->paginate(25);
+
         return view('auth.admin.presensi.pages.create', [
             'title' => 'Presensi',
+            'presensis' => $presensiHariIni
         ]);
     }
 
@@ -83,10 +90,10 @@ class PresensiController extends Controller
             $errorMessage = implode("\n", $errors);
 
             Toast::title('Error!')
-            ->warning()
-            ->rightTop()
-            ->autoDismiss(5)
-            ->message($errorMessage);
+                ->warning()
+                ->rightTop()
+                ->autoDismiss(5)
+                ->message($errorMessage);
             return redirect()->back()->withInput();
         }
 

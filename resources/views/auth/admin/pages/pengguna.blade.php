@@ -14,9 +14,9 @@
         <div class="flex justify-between mb-4 items-center flex-wrap gap-2">
             <h1 class="font-semibold text-xl">Daftar Pengguna</h1>
             <div class="flex gap-2">
-                <a class="items-center gap-2 flex bg-[#083f5a] p-2 rounded-md fill-white text-white"
+                <Link class="items-center gap-2 flex bg-[#083f5a] p-2 rounded-md fill-white text-white"
                     href="{{ route('admin.pengguna.export') }}"><box-icon name='download'></box-icon> Export
-                    User Data</a>
+                User Data</Link>
             </div>
         </div>
         <div class="rounded-md overflow-auto bg-slate-300">
@@ -31,36 +31,60 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($penggunas as $index => $pengguna)
-                        <tr class="even:bg-slate-400 font-medium border-b border-slate-400">
-                            <td class="text-center p-2 border-r border-slate-300">{{ $index + 1 }}</td>
-                            <td class="text-center p-2 border-r border-slate-300">{{ $pengguna->nama }}</td>
-                            <td class="text-center p-2 border-r border-slate-300">{{ $pengguna->email }}</td>
-                            <td class="text-center p-2">
-                                @if (!empty($pengguna->getRoleNames()))
-                                    @foreach ($pengguna->getRoleNames() as $v)
-                                        <label class="border border-[#083f5a] rounded-lg px-2 py-1">{{ $v }}</label>
-                                    @endforeach
-                                @endif
-                            </td>
-                            <td class="p-2 flex justify-center gap-4 border-l border-slate-300">
-                                <Link href="{{ route('admin.pengguna.edit', $pengguna->id) }}" class="bg-[#788d00] text-white py-1 px-3 rounded-sm">
-                                Edit
-                                </Link>
-                                <form action="{{ route('admin.pengguna.destroy', $pengguna->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="bg-[#8d0500] text-white py-1 px-3 rounded-sm">
-                                        Hapus
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                    <x-splade-lazy>
+                        <x-slot:placeholder>
+                            <tr>
+                                <td class="text-center p-8" colspan="5">
+                                    Sedang memuat list Pengguna...
+                                </td>
+                            </tr>
+                        </x-slot:placeholder>
+                        @if ($penggunas->count())
+                            @foreach ($penggunas as $index => $pengguna)
+                                <tr class="even:bg-slate-400 font-medium border-b border-slate-400">
+                                    <td class="text-center p-2 border-r border-slate-300">{{ $index + 1 }}</td>
+                                    <td class="text-center p-2 border-r border-slate-300">{{ $pengguna->nama }}</td>
+                                    <td class="text-center p-2 border-r border-slate-300">{{ $pengguna->email }}</td>
+                                    <td class="text-center p-2">
+                                        @if (!empty($pengguna->getRoleNames()))
+                                            @foreach ($pengguna->getRoleNames() as $v)
+                                                <label
+                                                    class="border border-[#083f5a] rounded-lg px-2 py-1">{{ $v }}</label>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td class="p-2 flex justify-center gap-4 border-l border-slate-300">
+                                        <Link href="{{ route('admin.pengguna.edit', $pengguna->id) }}"
+                                            class="bg-[#788d00] text-white py-1 px-3 rounded-sm">
+                                        Edit
+                                        </Link>
+                                        <x-splade-form action="{{ route('admin.pengguna.destroy', $pengguna->id) }}"
+                                            method="DELETE" confirm="Hapus Data"
+                                            confirm-text="Apakah kamu yakin akan menghapusnya?"
+                                            confirm-button="Ya, aku ingin menghapusnya!" cancel-button="Tidak">
+                                            @csrf
+                                            <button type="submit" class="bg-[#8d0500] text-white py-1 px-3 rounded-sm">
+                                                Hapus
+                                            </button>
+                                        </x-splade-form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="text-center p-8" colspan="5">
+                                    Tidak ada hasil yang ditemukan.
+                                </td>
+                            </tr>
+                        @endif
+                    </x-splade-lazy>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
-        <x-pagination-items :paginator="$penggunas" route="{{ route('admin.pengguna') }}" />
-    </div>
+    @if ($penggunas->hasPages())
+        <div class="bg-slate-200 p-2 md:p-4 rounded-md my-4 mb-0">
+            <x-pagination-items :paginator="$penggunas" route="{{ route('admin.pengguna') }}" />
+        </div>
+    @endif
 </x-layouts.admin>

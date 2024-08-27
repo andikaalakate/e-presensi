@@ -78,6 +78,7 @@ Route::name('admin.')->prefix('admin')->middleware(['splade', 'auth:admin', 'aut
         Route::get('/{pengguna}/edit', [PenggunaController::class, 'edit'])->name('edit');
         Route::put('/{pengguna}', [PenggunaController::class, 'update'])->name('update');
         Route::delete('/{pengguna}', [PenggunaController::class, 'destroy'])->name('destroy');
+        Route::post('/multiple-delete', [PenggunaController::class, 'destroyMultiple'])->name('multiple-delete');
     });
 
     // Peringkat

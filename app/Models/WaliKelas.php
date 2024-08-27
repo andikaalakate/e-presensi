@@ -18,6 +18,11 @@ class WaliKelas extends Model
         return $this->belongsTo(Kelas::class, 'kelas_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function siswa()
     {
         return $this->hasManyThrough(

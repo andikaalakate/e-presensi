@@ -22,10 +22,17 @@ class SiswaController extends Controller
     {
         $query = Siswa::with('kelas', 'presensi', 'siswaLogin')->filterBySiswa();
         $siswas = $query->paginate(5)->withQueryString();
+        $title = 'Siswa';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => $title, 'url' => ''],
+        ];
 
         return view('auth.admin.pages.siswa', [
-            'title' => 'Siswa',
-            'siswas' => $siswas
+            'title' => $title,
+            'siswas' => $siswas,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
@@ -36,9 +43,17 @@ class SiswaController extends Controller
     {
         $kelas = Kelas::all();
 
+        $title = 'Tambah Siswa';
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Siswa', 'url' => route('admin.siswa')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.siswa.pages.create', [
-            'title' => 'Tambah Siswa',
-            'kelas' => $kelas
+            'title' => $title,
+            'kelas' => $kelas,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
@@ -145,9 +160,18 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::with('kelas', 'presensi', 'siswaLogin')->find($id);
 
+        $title = 'Lihat Siswa';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Siswa', 'url' => route('admin.siswa')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.siswa.pages.show', [
-            'title' => 'Lihat Siswa',
-            'siswa' => $siswa
+            'title' => $title,
+            'siswa' => $siswa,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
@@ -163,11 +187,20 @@ class SiswaController extends Controller
             ['nama' => 'Perempuan', 'value' => 'Perempuan'],
         ];
 
+        $title = 'Edit Siswa';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Siswa', 'url' => route('admin.siswa')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.siswa.pages.edit', [
-            'title' => 'Edit Siswa',
+            'title' => $title,
             'siswa' => $siswa,
             'kelas' => $kelas,
-            'jk' => $jk
+            'jk' => $jk,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
