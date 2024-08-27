@@ -5,6 +5,8 @@
     </x-slot:title>
     <div class="bg-slate-200 p-2 md:p-4 rounded-md">
         <div class="flex items-center justify-between gap-2">
+            <x-search-form route="{{ route('admin.jurusan') }}" value="{{ request('search') }}" placeholder="Cari..." />
+
             <x-action-button class="bg-[#008d3b] fill-white p-1 rounded-sm " route="{{ route('admin.jurusan.create') }}"
                 icon="plus" />
         </div>
