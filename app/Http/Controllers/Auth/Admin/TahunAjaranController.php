@@ -15,10 +15,17 @@ class TahunAjaranController extends Controller
     {
         $query = TahunAjaran::with('kelas')->latest();
         $tahunAjarans = $query->paginate(5);
+        $title = 'Tahun Ajaran';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => $title, 'url' => ''],
+        ];
 
         return view('auth.admin.pages.tahun-ajaran', [
             'title' => 'Tahun Ajaran',
-            'tahunAjarans' => $tahunAjarans
+            'tahunAjarans' => $tahunAjarans,
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
@@ -27,8 +34,19 @@ class TahunAjaranController extends Controller
      */
     public function create()
     {
+        $title = 'Tambah Tahun Ajaran';
+
+        $breadcrumbs = [
+            ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['label' => 'Tahun Ajaran', 'url' => route('admin.tahun-ajaran')],
+            ['label' => $title, 'url' => ''],
+        ];
+
         return view('auth.admin.tahun-ajaran.pages.create', [
             'title' => 'Tambah Tahun Ajaran',
+            
+            'breadcrumbs' => $breadcrumbs
+
         ]);
     }
 
@@ -55,8 +73,15 @@ class TahunAjaranController extends Controller
      */
     public function edit(string $id)
     {
+        $title = 'Edit Tahun Ajaran';
+
+        $breadcrumbs = [
+            ['label' => '..', 'url' => route('admin.tahun-ajaran')],
+            ['label' => $title, 'url' => ''],
+        ];
         return view('auth.admin.tahun-ajaran.pages.edit', [
             'title' => 'Edit Tahun Ajaran',
+            'breadcrumbs' => $breadcrumbs
         ]);
     }
 
